@@ -1,0 +1,11 @@
+[Unit]
+Description=Collect packets on WiFi channel 6 with tcpdump
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/packet_capture.sh -i wlp2s0 /tmp/packets/channel_6.pcap -C 10 -W 100 -s0
+Restart=always
+ExecStopPost=/usr/sbin/airmon-ng stop wlp2s0mon
+
+[Install]
+WantedBy=multi-user.target

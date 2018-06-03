@@ -1,0 +1,2 @@
+#+TITLE: Packet Capture
+An attempt to create a generic interface for packet capturing as I try different programs. Right now it's based on [[https://www.aircrack-ng.org/doku.php?id=airmon-ng][airmon-ng]] (to put the wireless interface into monitor mode) and [[http://www.tcpdump.org/][tcpdump]]. The tests require [[https://github.com/sstephenson/bats][BATS]].
