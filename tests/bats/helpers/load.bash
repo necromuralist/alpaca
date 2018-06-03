@@ -7,7 +7,20 @@ ERROR=2
 CAPTURE_COMMAND="packet-capture"
 TEST_COMMAND="${CAPTURE_COMMAND} --debug "
 DEFAULT_DIRECTORY="/tmp/packets/"
-SUFFIX="_%Y-%m-%d_%H:%M:%S.pcap"
+DEFAULT_MAX_FILES=10
+DEFAULT_MAX_SIZE=100
+DEFAULT_TIMESTAMP="%Y-%m-%d_%H:%M:%S"
+DEFAULT_POSTROTATE="gzip"
+DEFAULT_PACKET_LENGTH="0"
+DEFAULT_PERMISSIONS=770
+SUFFIX=".pcap"
+
+# Sets up the testing environment
+# This specifically adds the mocks to the path
+setup() {
+    export MOCK_GROUP="mock-group"
+    export PATH=${BATS_TEST_DIRNAME}/mocks:$PATH
+}
 
 # Runs the command and checks the message, expecting the status code to be okay
 #
@@ -70,11 +83,16 @@ link_executable() {
 #  None
 # Arguments:
 #  $1 - sub-string to match is the output
+#  $2 - optional value - if set, use a regular expression instead
 # Returns:
 #  0 - output had sub-string
 #  1 - otherwise
 expect_output_to_have_a_line_with() {
-    assert_line --partial "${1}"
+    if [ -z "${2}" ]; then
+        assert_line --partial "${1}"
+    else
+        assert_line --regexp "${1}"
+    fi
 }
 
 # Checks that the status was okay
