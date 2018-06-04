@@ -1,2 +1,20 @@
 #+TITLE: Packet Capture
-An attempt to create a generic interface for packet capturing as I try different programs. Right now it's based on [[https://www.aircrack-ng.org/doku.php?id=airmon-ng][airmon-ng]] (to put the wireless interface into monitor mode) and [[http://www.tcpdump.org/][tcpdump]]. The tests require [[https://github.com/sstephenson/bats][BATS]].
+An attempt to create a generic interface for wireless packet capturing as I try different programs. It assumes that you're using a debian-based system. I use Ubuntu so whatever I document will be based on that.
+
+* Installation
+** Dependencies
+   There are two dependencies, [[http://www.tcpdump.org/][tcpdump]] and [[https://www.aircrack-ng.org/doku.php?id=airmon-ng][airmon-ng]]. =airmon-ng= puts the interface into monitor mode and =tcpdump= is doing the capture. =airmon-ng= is part of the =aircrack-ng= suite so when you install that it will pull in =airmon-ng= with it.
+
+#+BEGIN_EXAMPLE
+sudo apt install tcpdump
+sudo apt install aircrack-ng
+#+END_EXAMPLE
+   
+* Tests
+  To run the tests you need [[https://github.com/sstephenson/bats][bats]]. If you are on a debian-based system you can install it with apt.
+
+#+BEGIN_EXAMPLE
+sudo apt install bats
+#+END_EXAMPLE
+
+Otherwise download their repository and put the =bats= file in your =PATH=.
