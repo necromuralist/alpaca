@@ -3,8 +3,8 @@
 # so make sure you get it right
 # or at least check the output
 # if you want to test it you're going to have to run it as root
-# or set the permissions for all the commands (`airmon-ng` is a bash script that calls)
-# other commands so it isn't just tcpdump that needs to be changed
+# or set the permissions for all the commands
+# (tcpdump and iwconfig)
 # this assumes you want to use tcpdump
 
 VERSION="2018.05.30"
@@ -88,7 +88,10 @@ usage() {
 # **  1 otherwise
 cleanup() {
     echo "${BOLD}Turning off monitor mode for ${interface}${RESET}"
-    airmon-ng stop ${interface}mon
+    ip link set ${interface} down
+    iwconfig ${interface} mode managed
+    ip link set ${interface} up
+    # airmon-ng stop ${interface}mon
     exit $?
 }
 
@@ -299,13 +302,32 @@ if [ ! -z $debug ]; then
 fi
 
 echo "Putting interface ${interface} into monitor mode"
-airmon-ng start $interface $channel
-airmon-ng check kill
+# airmon-ng start $interface $channel
+# airmon-ng check kill
 
-if [ $? -ne 0 ]; then
-    echo "airmon-ng did not succeed, not running tcpdump"
-    exit 1
-fi
+# Checks that the last command succeeded
+#
+# Arguments:
+#  command-name: the name to display in the output
+# Returns:
+#  0 on succes
+#  1 otherwise
+check_ok() {
+    if [ $? -ne 0 ]; then
+        echo "$1 did to succeed, quitting"
+        exit 1
+    else
+        echo "$1 suceeded, moving on"
+    fi
+}
+
+
+ip link set ${interface} down
+check_ok "ip link set ${interface} down"
+iwconfig $interface mode monitor
+check_ok "iwconfig ${interface} mode monitor"
+ip link set ${interface} up
+check_ok "ip link set ${interface} up"
 
 # catch ctrl-c and cleanup before quitting
 trap cleanup SIGINT

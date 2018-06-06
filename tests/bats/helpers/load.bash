@@ -5,7 +5,8 @@
 OKAY=0
 ERROR=2
 CAPTURE_COMMAND="packet-capture"
-TEST_COMMAND="${CAPTURE_COMMAND} --debug "
+TEST_COMMAND=${CAPTURE_COMMAND}
+DEBUG_COMMAND="${CAPTURE_COMMAND} --debug "
 DEFAULT_DIRECTORY="/tmp/packets/"
 DEFAULT_MAX_FILES=10
 DEFAULT_MAX_SIZE=100
@@ -57,7 +58,7 @@ link_executable() {
 
     # I don't know why but my machines at home act differently than brunhilde does
     local above_source="system_setup/bin/packet_capture.sh"
-    local helper_source="../../../system_setup/bin/packet_capture.sh"
+    local helper_source="../../system_setup/bin/packet_capture.sh"
     local local_source=""
 
     if [ -e ${above_source} ]; then

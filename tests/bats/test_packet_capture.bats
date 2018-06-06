@@ -200,6 +200,11 @@ REQUIRED="The following arguments are required:"
     # And the output is the expected
     expect_output_to_have_a_line_with "Using Wireless Interface: ${interface}"
     expect_output_to_have_a_line_with "Using Channel: ${channel}"
+
+    # And ip and iwconfig are called correctly
+    expect_output_to_have_a_line_with "ip called with: link set ${interface} down"
+    expect_output_to_have_a_line_with "iwconfig called with: ${interface} mode monitor"
+    expect_output_to_have_a_line_with "ip called with: link set ${interface} up"
 }
 
 @test "Scenario: The user passes in the channel and interface with long options" {
@@ -216,6 +221,11 @@ REQUIRED="The following arguments are required:"
     # And the output is the expected
     expect_output_to_have_a_line_with "Using Wireless Interface: ${interface}"
     expect_output_to_have_a_line_with "Using Channel: ${channel}"
+
+    # And ip and iwconfig are called correctly
+    expect_output_to_have_a_line_with "ip called with: link set ${interface} down"
+    expect_output_to_have_a_line_with "iwconfig called with: ${interface} mode monitor"
+    expect_output_to_have_a_line_with "ip called with: link set ${interface} up"    
 }
 
 # ********** Output Path ********** #
