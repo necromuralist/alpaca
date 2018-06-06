@@ -291,7 +291,7 @@ echo "Each file will be a maximum of $max_file_size million bytes"
 # --dont-verify-checksums: Some hardware will cause it to flag outgoing TCP packets as bad if not set
 
 options="-n -w $output_file -C $max_file_size -W $max_files --snapshot-length ${packet_length} "\
-"--interface ${interface}mon -z ${post_rotation}${username_argument}${buffer_size}${disable_verification}${verbosity}"
+"--interface ${interface} -z ${post_rotation}${username_argument}${buffer_size}${disable_verification}${verbosity}"
 echo "tcpdump ${options}"
 
 
@@ -324,8 +324,10 @@ check_ok() {
 
 ip link set ${interface} down
 check_ok "ip link set ${interface} down"
-iwconfig $interface mode monitor
+iwconfig ${interface} mode monitor
 check_ok "iwconfig ${interface} mode monitor"
+iwconfig ${interface} channel ${channel}
+check_ok "iwconfig ${interface} channel ${channel}"
 ip link set ${interface} up
 check_ok "ip link set ${interface} up"
 

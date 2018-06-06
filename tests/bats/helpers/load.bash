@@ -23,23 +23,6 @@ setup() {
     export PATH=${BATS_TEST_DIRNAME}/mocks:$PATH
 }
 
-# Runs the command and checks the message, expecting the status code to be okay
-#
-# GLobals:
-#  None
-# Arguments:
-#  $1 - command options
-#  $2 - Expected output string
-# Returns:
-#  0 - on success
-#  1 - otherwise
-expect_okay_output() {
-    echo "options: ${1}"
-    run ${TEST_COMMAND} $1
-    expect_status_to_be_okay
-    expect_output_to_have_a_line_with $2
-}
-
 # Sets up the symbolic link for the packet-capture command
 # This will create a symbolic link (if needed) to the software under test
 # Into the /tmp folder so that we can test it without (semi-)permanently
@@ -80,12 +63,29 @@ link_executable() {
     export PATH=${extra_path}:$PATH
 }
 
+# Runs the command and checks the message, expecting the status code to be okay
+#
+# GLobals:
+#  None
+# Arguments:
+#  $1 - command options
+#  $2 - Expected output string
+# Returns:
+#  0 - on success
+#  1 - otherwise
+expect_okay_output() {
+    echo "options: ${1}"
+    run ${TEST_COMMAND} $1
+    expect_status_to_be_okay
+    expect_output_to_have_a_line_with $2
+}
+
 # Checks that the output had a sub-string
 #
 # Globals:
 #  None
 # Arguments:
-#  $1 - sub-string to match is the output
+#  $1 - sub-string to match in the output
 #  $2 - optional value - if set, use a regular expression instead
 # Returns:
 #  0 - output had sub-string
@@ -95,6 +95,24 @@ expect_output_to_have_a_line_with() {
         assert_line --partial "${1}"
     else
         assert_line --regexp "${1}"
+    fi
+}
+
+# Checks that the output didn't have a sub-string
+#
+# Globals:
+#  None
+# Arguments:
+#  $1 - sub-string to not match in the output
+#  $2 - optional value - if set, use a regular expression instead
+# Returns:
+#  0 - output had sub-string
+#  1 - otherwise
+expect_output_to_not_have_a_line_with() {
+    if [ -z "${2}" ]; then
+        refute_line --partial "${1}"
+    else
+        refute_line --regexp "${1}"
     fi
 }
 

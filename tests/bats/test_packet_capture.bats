@@ -204,6 +204,7 @@ REQUIRED="The following arguments are required:"
     # And ip and iwconfig are called correctly
     expect_output_to_have_a_line_with "ip called with: link set ${interface} down"
     expect_output_to_have_a_line_with "iwconfig called with: ${interface} mode monitor"
+    expect_output_to_have_a_line_with "iwconfig called with: ${interface} channel ${channel}"
     expect_output_to_have_a_line_with "ip called with: link set ${interface} up"
 }
 
@@ -225,6 +226,7 @@ REQUIRED="The following arguments are required:"
     # And ip and iwconfig are called correctly
     expect_output_to_have_a_line_with "ip called with: link set ${interface} down"
     expect_output_to_have_a_line_with "iwconfig called with: ${interface} mode monitor"
+    expect_output_to_have_a_line_with "iwconfig called with: ${interface} channel ${channel}"    
     expect_output_to_have_a_line_with "ip called with: link set ${interface} up"    
 }
 
@@ -312,8 +314,12 @@ REQUIRED="The following arguments are required:"
     # When the user passes in the debug flag
     local expected_output="DEBUG"
     expect_okay_with_random_channel_and_interface "-d" "${expected_output}"
-    # And airmon-ng wasn't called
-    # need to mock this
+    # And ip wasn't called
+    expect_output_to_not_have_a_line_with "ip called"
+    # And iwconfig wasn't called
+    expect_output_to_not_have_a_line_with "iwconfig called"
+    # And tcpdump wasn't called
+    expect_output_to_not_have_a_line_with "tcpdump called"
 }
 
 @test "Scenario: The user passes in the long debug flag." {
@@ -322,8 +328,13 @@ REQUIRED="The following arguments are required:"
     # When the user passes in the debug flag
     local expected_output="DEBUG"
     expect_okay_with_random_channel_and_interface "--debug" "${expected_output}"
-    # And airmon-ng wasn't called
-    # need a mock
+
+    # And ip wasn't called
+    expect_output_to_not_have_a_line_with "ip called"
+    # And iwconfig wasn't called
+    expect_output_to_not_have_a_line_with "iwconfig called"
+    # And tcpdump wasn't called
+    expect_output_to_not_have_a_line_with "tcpdump called"    
 }
 # ******************** Unknown ******************** #
 
@@ -590,10 +601,13 @@ REQUIRED="The following arguments are required:"
     local channel=$(random_integer 1 100)
     local interface=$(random_alphanumeric 5)
     local options="-i ${interface} -c ${channel} ${1}"
-    local expected_output="tcpdump -n -w ${DEFAULT_DIRECTORY}channel_${channel}.pcap -C ${DEFAULT_MAX_SIZE} -W ${DEFAULT_MAX_FILES} --snapshot-length ${DEFAULT_PACKET_LENGTH} --interface ${interface}mon -z ${DEFAULT_POSTROTATE}"
+    local tcpdump_options="-n -w ${DEFAULT_DIRECTORY}channel_${channel}.pcap -C ${DEFAULT_MAX_SIZE} -W ${DEFAULT_MAX_FILES} --snapshot-length ${DEFAULT_PACKET_LENGTH} --interface ${interface} -z ${DEFAULT_POSTROTATE}"
+    local expected_output="tcpdump ${tcpdump_options}"
     expect_okay_output "${options}" "${expected_output}"
     # Then it exits okay
     # And the output is the expected
+    # check the actual call to tcpdump, not the output for the user
+    expect_output_to_have_a_line_with "tcpdump called with: ${tcpdump_options}"
 }
 
 # - for each, check that the user actually passed in a command? {}
