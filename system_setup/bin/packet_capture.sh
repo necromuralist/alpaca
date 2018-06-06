@@ -314,22 +314,25 @@ echo "Putting interface ${interface} into monitor mode"
 #  1 otherwise
 check_ok() {
     if [ $? -ne 0 ]; then
-        echo "$1 did to succeed, quitting"
+        echo "$1 did not succeed, quitting"
         exit 1
     else
         echo "$1 suceeded, moving on"
     fi
 }
 
-
+# you don't always need to do this, but sometimes brining the interface
+# down helps set monitor mode
 ip link set ${interface} down
 check_ok "ip link set ${interface} down"
 iwconfig ${interface} mode monitor
 check_ok "iwconfig ${interface} mode monitor"
-iwconfig ${interface} channel ${channel}
-check_ok "iwconfig ${interface} channel ${channel}"
+
+# but it won't set the channel unless the interface is up
 ip link set ${interface} up
 check_ok "ip link set ${interface} up"
+iwconfig ${interface} channel ${channel}
+check_ok "iwconfig ${interface} channel ${channel}"
 
 # catch ctrl-c and cleanup before quitting
 trap cleanup SIGINT

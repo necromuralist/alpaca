@@ -80,7 +80,25 @@ expect_okay_output() {
     expect_output_to_have_a_line_with $2
 }
 
-# Checks that the output had a sub-string
+# Checks that the output had a substring
+#
+# Globals:
+#  None
+# Arguments:
+#  $1 - sub-string to match in the output
+#  $2 - optional value - if set, use a regular expression instead
+# Returns:
+#  0 - output had sub-string
+#  1 - otherwise
+expect_output_to_have_lines_with() {
+    if [ -z "${2}" ]; then
+        assert_output --partial "${1}"
+    else
+        assert_output --regexp "${1}"
+    fi
+}
+
+# Checks that the one of the lines of output had a sub-string
 #
 # Globals:
 #  None
@@ -98,7 +116,7 @@ expect_output_to_have_a_line_with() {
     fi
 }
 
-# Checks that the output didn't have a sub-string
+# Checks that all of the lines of output didn't have a sub-string
 #
 # Globals:
 #  None

@@ -202,10 +202,7 @@ REQUIRED="The following arguments are required:"
     expect_output_to_have_a_line_with "Using Channel: ${channel}"
 
     # And ip and iwconfig are called correctly
-    expect_output_to_have_a_line_with "ip called with: link set ${interface} down"
-    expect_output_to_have_a_line_with "iwconfig called with: ${interface} mode monitor"
-    expect_output_to_have_a_line_with "iwconfig called with: ${interface} channel ${channel}"
-    expect_output_to_have_a_line_with "ip called with: link set ${interface} up"
+    expect_output_to_have_lines_with "ip called with: link set ${interface} down.*iwconfig called with: ${interface} mode monitor.*ip called with: link set ${interface} up.*iwconfig called with: ${interface} channel ${channel}" 'regex'
 }
 
 @test "Scenario: The user passes in the channel and interface with long options" {
@@ -224,10 +221,8 @@ REQUIRED="The following arguments are required:"
     expect_output_to_have_a_line_with "Using Channel: ${channel}"
 
     # And ip and iwconfig are called correctly
-    expect_output_to_have_a_line_with "ip called with: link set ${interface} down"
-    expect_output_to_have_a_line_with "iwconfig called with: ${interface} mode monitor"
-    expect_output_to_have_a_line_with "iwconfig called with: ${interface} channel ${channel}"    
-    expect_output_to_have_a_line_with "ip called with: link set ${interface} up"    
+    # And ip and iwconfig are called correctly
+    expect_output_to_have_lines_with "ip called with: link set ${interface} down.*iwconfig called with: ${interface} mode monitor.*ip called with: link set ${interface} up.*iwconfig called with: ${interface} channel ${channel}" 'regex'
 }
 
 # ********** Output Path ********** #
