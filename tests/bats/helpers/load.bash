@@ -59,11 +59,13 @@ link_executable() {
     local above_source="system_setup/bin/packet_capture.sh"
     local helper_source="../../../system_setup/bin/packet_capture.sh"
     local local_source=""
-    if [ -f {$above_source} ]; then
+
+    if [ -e ${above_source} ]; then
         local_source=$above_source
-    elif [ -f {$helper_source} ]; then
+    elif [ -e ${helper_source} ]; then
         local_source=$helper_source
     else
+        echo "packet_capture.sh not found"
         target=$(which $CAPTURE_COMMAND)
         if [ $? -ne 0 ]; then
             echo "Error: Unable to find '$CAPTURE_COMMAND'"
@@ -71,7 +73,7 @@ link_executable() {
         fi
     fi
     mkdir -p ${extra_path}
-    if [ ! -f ${target} ]; then
+    if [ ! -e ${target} ]; then
         ln -rs ${local_source} ${target}
     fi
     export PATH=${extra_path}:$PATH
