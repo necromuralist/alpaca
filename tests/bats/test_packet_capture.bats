@@ -22,7 +22,6 @@ REQUIRED="The following arguments are required:"
 # ******************** In Progress ******************** #
 # Put the in-progress stuff first since BATS doesn't let you run just one test
 
-
 # ******************** installed ******************** #
 
 
@@ -595,7 +594,7 @@ REQUIRED="The following arguments are required:"
     # When the user passes in the channel and interface
     local channel=$(random_integer 1 100)
     local interface=$(random_alphanumeric 5)
-    local options="-i ${interface} -c ${channel} ${1}"
+    local options="-i ${interface} -c ${channel}"
     local tcpdump_options="-n -w ${DEFAULT_DIRECTORY}channel_${channel}.pcap -C ${DEFAULT_MAX_SIZE} -W ${DEFAULT_MAX_FILES} --snapshot-length ${DEFAULT_PACKET_LENGTH} --interface ${interface} -z ${DEFAULT_POSTROTATE}"
     local expected_output="tcpdump ${tcpdump_options}"
     expect_okay_output "${options}" "${expected_output}"
@@ -607,3 +606,23 @@ REQUIRED="The following arguments are required:"
 
 # - for each, check that the user actually passed in a command? {}
 # - and for numbers, check that they are numbers
+
+
+# ******************** stdout ******************** #
+
+@test "Scenario: The user passes in the stdout option" {
+    # Given the packet-capture command is on the path
+
+    # When the user passes in --stdout
+    local channel=$(random_integer 1 100)
+    local interface=$(random_alphanumeric 5)
+    local options="-i ${interface} -c ${channel} --stdout"
+
+    local tcpdump_options="-n --snapshot-length ${DEFAULT_PACKET_LENGTH} --interface ${interface}"
+    local expected_output="tcpdump ${tcpdump_options}"
+    # Then it exits okay
+    expect_okay_output "${options}" "${expected_output}"
+
+    # And it has the expected tcpdump output
+}
+

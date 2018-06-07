@@ -57,6 +57,7 @@ usage() {
     echo "  ${BLUE}-s, --max-size${RESET} <size>: Maximum size for each file (in millions of bytes)"
     echo "  ${BLUE}-u, --username${RESET} <name>: Name of the user to own the files (otherwise it is 'root')"
     echo "  ${BLUE}-v, --verbosity${RESET} <level>: Increase verbosity level for the packet output (by 1, 2, or 3)"
+    echo "  ${BLUE}    --stdout${RESET}: Dump to stdout instead of logging"
     echo "  ${BLUE}    --version${RESET}: Output the current version of this command"
 
     echo
@@ -76,6 +77,22 @@ usage() {
     fi
 }
 
+# Checks that the last command succeeded
+#
+# Arguments:
+#  command-name: the name to display in the output
+# Returns:
+#  0 on succes
+#  1 otherwise
+check_ok() {
+    if [ $? -ne 0 ]; then
+        echo "$1 did not succeed, quitting"
+        exit 1
+    else
+        echo "$1 suceeded, moving on"
+    fi
+}
+
 # ** Cleanup function to handle the script being killed
 # ** This is primarily meant to take the interface back outof monitor mode
 # **
@@ -91,18 +108,28 @@ cleanup() {
     ip link set ${interface} down
     iwconfig ${interface} mode managed
     ip link set ${interface} up
-    # airmon-ng stop ${interface}mon
     exit $?
 }
 
 # ** Displays the required arguments
+# **
+# ** Globals
+# **  ERROR: exit code that indicates an error
 required() {
-    echo "The following arguments are required:"
+    echo "${BOLD}The following arguments are required:${RESET}"
     echo "  -i <wireless interface>"
     echo "  -c <channel>"
     exit ${ERROR}
 }
 
+# ** Echos the current version
+# **
+# ** Globals
+# **  VERSION: the version to emit
+# **
+# ** Returns
+# **  0: ran okay
+# **  1: otherwise
 check_version() {
     if [ ! -z ${version} ]; then
         echo "Version: ${VERSION}"
@@ -110,12 +137,25 @@ check_version() {
     fi
 }
 
+# ** Checks that the options we require were passed in
+# **
+# ** Globals
+# **  i_set: interface was set
+# **  c_set: channel was let
+# **  required: function called if one of them isn't set
 check_required() {
     if [[ -z $i_set || -z $c_set ]]; then
         required
     fi
 }
 
+# ** Sets up the output directory
+# ** Besides making sure it exists, if a user's name was passed in
+# ** it will make it writeable and owned by that user
+# **
+# ** Globals:
+# **  output_path: user-defined path to save logs in
+# **  username: name of user who will own the packets
 setup_output_directory() {
     if [ -z $output_path ]; then
         output_path=/tmp/packets/
@@ -128,11 +168,18 @@ setup_output_directory() {
 
     if [ ! -z $username ]; then
         chmod -R ${DIRECTORY_PERMISSIONS} ${output_path}
-        group=$(id -gn ${username})
+        local group=$(id -gn ${username})
         chown -R ${username}:${group} ${output_path}
     fi
 }
 
+# ** Sets up the output file name
+# ** Uses the path and suffix
+# **
+# ** Globals
+# **  output_file: base-name for the file
+# **  output_path: folder to hold the file
+# **  SUFFIX: suffix to add to the file-name
 setup_output_file() {
     if [ -z ${output_file} ]; then
         output_file=channel_${channel}
@@ -260,6 +307,7 @@ setup_arguments() {
                 shift
                 ;;
             --version) version=true; shift;;
+            --stdout) stdout=true; shift;;
             *)
                 usage
                 echo "${BOLD}${RED}Error: Unknown Argument${RESET} '${1}'"
@@ -273,6 +321,31 @@ setup_arguments() {
     check_defaults
     setup_output_directory
     setup_output_file
+}
+
+# ** Sets up the tcpdump arguments
+# **
+# ** Globals
+# **  output_file: path to use as the base-name of the output file
+# **  max_file_size: max size of each file allowed before compression
+# **  max_files: number of files at which to rotate
+# **  packet_length: maximum length of the packet to store
+# **  interface: interface to capture packets from
+# **  post_rotation: command to apply to a file after it's rotated
+# **  username_argument: owner of file after rotation
+# **  buffer_size: the capture buffer size
+# **  disable_verification: don't verify packet checksums
+# **  verbosity: amount of output to create
+# **  stdout: if set, ignore the file-rotation arguments (debugging only)
+setup_tcpdump_arguments() {
+    if [ ! -z ${stdout} ]; then
+        options="-n --snapshot-length ${packet_length} "\
+"--interface ${interface}${username_argument}${buffer_size}${disable_verification}${verbosity}"
+    else
+        options="-n -w $output_file -C $max_file_size -W $max_files --snapshot-length ${packet_length} "\
+"--interface ${interface} -z ${post_rotation}${username_argument}${buffer_size}${disable_verification}${verbosity}"
+    fi
+    echo "tcpdump ${options}"       
 }
 
 setup_arguments "$@"
@@ -290,10 +363,7 @@ echo "Each file will be a maximum of $max_file_size million bytes"
 # --buffer-size: OS capture buffer size
 # --dont-verify-checksums: Some hardware will cause it to flag outgoing TCP packets as bad if not set
 
-options="-n -w $output_file -C $max_file_size -W $max_files --snapshot-length ${packet_length} "\
-"--interface ${interface} -z ${post_rotation}${username_argument}${buffer_size}${disable_verification}${verbosity}"
-echo "tcpdump ${options}"
-
+setup_tcpdump_arguments
 
 if [ ! -z $debug ]; then
     # don't run the actual commands
@@ -302,24 +372,6 @@ if [ ! -z $debug ]; then
 fi
 
 echo "Putting interface ${interface} into monitor mode"
-# airmon-ng start $interface $channel
-# airmon-ng check kill
-
-# Checks that the last command succeeded
-#
-# Arguments:
-#  command-name: the name to display in the output
-# Returns:
-#  0 on succes
-#  1 otherwise
-check_ok() {
-    if [ $? -ne 0 ]; then
-        echo "$1 did not succeed, quitting"
-        exit 1
-    else
-        echo "$1 suceeded, moving on"
-    fi
-}
 
 # you don't always need to do this, but sometimes brining the interface
 # down helps set monitor mode
