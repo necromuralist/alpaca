@@ -1,0 +1,20 @@
+# This is the file to start the packet capture service on channel 11
+# Edit it to what you need and then put it in /lib/systemd/system
+# Then start it with `sudo service channel_11 start`
+#
+# It assumes that your wireless interface is named wlp2s0
+# And it creates up to 100 files each of which is 1000 Million bytes
+#
+# It also assumes that you installed the packet_capture.sh file in /usr/local/bin
+
+[Unit]
+Description=Collect packets on WiFi channel 11 with tcpdump
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/packet_capture.sh --channel 11 --interface wlp2s0  --max-files 100 --max-size 1000
+Restart=always
+ExecStopPost=/usr/sbin/airmon-ng stop wlp2s0mon
+
+[Install]
+WantedBy=multi-user.target
