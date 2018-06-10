@@ -1,0 +1,4 @@
+Sitemap: https://github.com/necromuralist/packet_capture/sitemapindex.xml
+
+User-Agent: *
+Host: github.com
