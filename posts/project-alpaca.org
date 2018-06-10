@@ -1,0 +1,15 @@
+#+BEGIN_COMMENT
+.. title: Project ALPaCa
+.. slug: project-alpaca
+.. date: 2018-06-10 14:47:23 UTC-07:00
+.. tags: alpaca
+.. category: about
+.. link: 
+.. description: About project ALPaCa.
+.. type: text
+#+END_COMMENT
+
+* What's this about, then?
+  An [[https://en.wikipedia.org/wiki/Alpaca][Alpaca]] is a South American animal that is similar to a llama. Project ALPaCa is A Little Packet Capturer project that I'm creating to hopefully make packet capturing easier for me. One of the problems with something as complicated as packet capture and packet analysis is that there is no real easy first step. Right from the start you have to try and learn a whole bunch of things, read a lot of (probably poorly written) documentation and at the same time try it all out. I intend for Project ALPaCa to abstract the capturing and gathering of packets so that I'll have something that both does the capturing and acts as a static document about how to do it so I don't have to rely on my =.history= file (or worse, my memory).
+* Okay, but... what?
+  I'm primarily trying to learn more about wireless packet capturing and analysis. There's a lot of different programs and hardware out there, most of which claims that they have the solution - or at least a better solution- than the others, but I'm fundamentally not a technologist. I want to learn the concepts more than I want to learn some specific program. So I'm going to try and put into code the things that I learn so that I don't have to really learn them, and maybe write up what I find as well. Though this is /Project ALPaCa/, this notebook is more my /Adventures In Packet Capturing/, but I couldn't find a good acronym based on AIPC.
