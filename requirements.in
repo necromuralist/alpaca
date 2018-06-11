@@ -1,0 +1,14 @@
+expects
+ghp-import2
+Nikola
+pip-tools
+pipdeptree
+pytest-bdd
+pytest-mock
+pytest-xdist
+sphinx-autobuild
+sphinx-bootstrap-theme
+sphinxcontrib-plantuml
+webassets
+wheel
+ws4py
