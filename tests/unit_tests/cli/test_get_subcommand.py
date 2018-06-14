@@ -33,7 +33,7 @@ from packets.get import (
 
 and_also = then
 scenario = partial(pytest_bdd.scenario,
-                   '../../features/get_subcommand.feature')
+                   '../../features/cli/get_subcommand.feature')
 
 
 class GetOption:
@@ -103,11 +103,13 @@ def test_source_and_target_given():
 
 
 @when("the user calls the get subcommand with the source and target")
-def call_with_source_and_target(katamari, mocker):
-    katamari.getter = mocker.MagicMock(spec=GetPackets)
+def call_with_source_and_target(katamari, mocker, faker):
+    katamari.getter_instance = mocker.MagicMock()
+    katamari.getter = mocker.MagicMock(spec=GetPackets,
+                                       return_value=katamari.getter_instance)
     mocker.patch("packets.main.GetPackets", katamari.getter)
     katamari.source = "/tmp"
-    katamari.target = "/tmp"
+    katamari.target = faker.unix_partition()
     katamari.result = katamari.runner.invoke(main, [GetOption.subcommand,
                                                     katamari.source,
                                                     katamari.target])
@@ -117,14 +119,47 @@ def call_with_source_and_target(katamari, mocker):
 
 @then("the GetPackets object is built with the expected arguments")
 def check_arguments(katamari):
-    katamari.getter.assert_called_once_with(source="")
+    katamari.getter.assert_called_once_with(source=katamari.source,
+                                            target=katamari.target,
+                                            start=GetDefaults.start,
+                                            end=GetDefaults.end)
     return
 
 
 @and_also("the GetPackets object is run")
 def check_call(katamari):
+    katamari.getter_instance.assert_called_once_with()
     return
 
+# ******************** non-existent source ******************** #
+
+
+@scenario("The user calls the get subcommand with a non-existent source")
+def test_bad_source():
+    return
+
+#  Given a cli runner
+
+
+@when("the user calls the get subcommand with a non-existent source")
+def call_bad_source(katamari, faker):
+    source = faker.file_path()
+    target = faker.unix_partition()
+    katamari.result = katamari.runner.invoke(main,
+                                             [GetOption.subcommand,
+                                              source, target])
+    return
+
+
+@then("it returns an error status")
+def check_error_status(katamari):
+    # expect(katamari.result.exit_code).to(equal(ExitCode.error))
+    return
+
+
+@and_also("it outputs an error message")
+def check_error_message(katamari):
+    return
 
 # ******************** no arguments ******************** #
 

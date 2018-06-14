@@ -28,7 +28,7 @@ from .common import (
 # software under test
 from packets.main import main
 
-scenario = partial(pytest_bdd.scenario, '../../features/root_packets_command.feature')
+scenario = partial(pytest_bdd.scenario, '../../features/cli/root_packets_command.feature')
 
 # ******************** no arguments ******************** #
 

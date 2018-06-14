@@ -1,4 +1,7 @@
 """Get the packets"""
+# python standard library
+import os
+
 # this project
 from .base import AlpacaBase
 
@@ -10,4 +13,17 @@ class GetDefaults:
 
 
 class GetPackets(AlpacaBase):
-    """Packet retriever"""
+    """Packet retriever
+
+    This gets the packets and assembles them into a single file
+
+    Args:
+     source: path to the directory with the PCAP files
+     target: path to where you want to keep the files
+     start: date/time for the earliest packet
+     end: date/time for the latest packets you want
+    """
+    def __init__(self, source, target, *args, **kwargs):
+        self.source = source
+        self.target = target
+        return

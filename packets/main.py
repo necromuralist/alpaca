@@ -21,7 +21,8 @@ def main(context):
 @click.argument("target")
 @click.option("--start", default=GetDefaults.start, help="Earliest packet time to get.")
 @click.option("--end", default=GetDefaults.end, help="Latest packet time to get.")
-def get(source, start, end):
+def get(source, target, start, end):
     """Collects the Packets for the user"""
-    collector = GetPackets(start=start, end=end)
+    collector = GetPackets(source=source, target=target, start=start, end=end)
+    collector()
     return

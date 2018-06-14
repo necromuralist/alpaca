@@ -2,6 +2,7 @@
 
 class ExitCode:
     okay=0
+    error=2
 
 
 class Option:

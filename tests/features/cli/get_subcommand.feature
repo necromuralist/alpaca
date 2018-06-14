@@ -18,6 +18,12 @@ Scenario: The user calls the get subcommand with only the source and target
   Then the GetPackets object is built with the expected arguments
   And the GetPackets object is run
 
+Scenario: The user calls the get subcommand with a non-existent source
+  Given a cli runner
+  When the user calls the get subcommand with a non-existent source
+  Then it returns an error status
+  And it outputs an error message
+
 Scenario: The user calls the get subcommand with no options
   Given a cli runner
   When the user calls the get subcommand with no options
