@@ -17,7 +17,7 @@ def main(context):
     return
 
 @main.command(context_settings=CONTEXT_SETTINGS, short_help="Get packet files and merge them.")
-@click.argument("source")
+@click.argument("source", type=click.Path(exists=True))
 @click.argument("target")
 @click.option("--start", default=GetDefaults.start, help="Earliest packet time to get.")
 @click.option("--end", default=GetDefaults.end, help="Latest packet time to get.")

@@ -27,3 +27,7 @@ class GetPackets(AlpacaBase):
         self.source = source
         self.target = target
         return
+
+    def __call__(self):
+        """Merges the packet files and saves them"""
+        return

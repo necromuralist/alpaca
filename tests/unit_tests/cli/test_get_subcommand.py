@@ -6,6 +6,7 @@ from functools import partial
 # from pypi
 from click.testing import CliRunner
 from expects import (
+    contain,
     equal,
     expect,
     start_with,
@@ -145,6 +146,7 @@ def test_bad_source():
 def call_bad_source(katamari, faker):
     source = faker.file_path()
     target = faker.unix_partition()
+    katamari.source = source
     katamari.result = katamari.runner.invoke(main,
                                              [GetOption.subcommand,
                                               source, target])
@@ -153,12 +155,13 @@ def call_bad_source(katamari, faker):
 
 @then("it returns an error status")
 def check_error_status(katamari):
-    # expect(katamari.result.exit_code).to(equal(ExitCode.error))
+    expect(katamari.result.exit_code).to(equal(ExitCode.error))
     return
 
 
 @and_also("it outputs an error message")
 def check_error_message(katamari):
+    expect(katamari.result.output).to(contain('Path "{}" does not exist.'.format(katamari.source)))
     return
 
 # ******************** no arguments ******************** #

@@ -21,6 +21,7 @@ from ..fixtures import katamari
 # software under test
 from packets.get import GetPackets
 
+And = when
 scenario = partial(pytest_bdd.scenario, '../../features/backend/get_packets.feature')
 
 # ******************** constructor ******************** #
@@ -55,3 +56,23 @@ def the_get_packets_object_has_the_expected_attributes(katamari):
     expect(katamari.getter.target).to(equal(katamari.arguments["target"]))
     return
 
+
+# ******************** call ******************** #
+
+
+@scenario("The user calls the GetPackets object")
+def test_call():
+    return
+
+#  Given valid arguments
+#  When the user builds the GetPackets object
+
+@And("calls the GetPackets object")
+def call_get_packets(katamari):
+    katamari.getter()
+    return
+
+
+@then("the GetPackets object performs the expected steps")
+def check_call(katamari):
+    return
