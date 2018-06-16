@@ -2,6 +2,7 @@
 """The get sub-command feature tests."""
 # python standard library
 from functools import partial
+import random
 
 # from pypi
 from click.testing import CliRunner
@@ -115,15 +116,16 @@ def call_with_source_and_target(katamari, mocker, faker):
                                                     katamari.source,
                                                     katamari.target])
     expect(katamari.result.exit_code).to(equal(ExitCode.okay))
+    katamari.arguments = dict(source=katamari.source,
+                              target=katamari.target,
+                              start=GetDefaults.start,
+                              end=GetDefaults.end)
     return
 
 
 @then("the GetPackets object is built with the expected arguments")
 def check_arguments(katamari):
-    katamari.getter.assert_called_once_with(source=katamari.source,
-                                            target=katamari.target,
-                                            start=GetDefaults.start,
-                                            end=GetDefaults.end)
+    katamari.getter.assert_called_once_with(**katamari.arguments)
     return
 
 
@@ -146,7 +148,7 @@ def test_bad_source():
 def call_bad_source(katamari, faker):
     source = faker.file_path()
     target = faker.unix_partition()
-    katamari.source = source
+    katamari.error_message = 'Path "{}" does not exist.'.format(source)
     katamari.result = katamari.runner.invoke(main,
                                              [GetOption.subcommand,
                                               source, target])
@@ -161,38 +163,65 @@ def check_error_status(katamari):
 
 @and_also("it outputs an error message")
 def check_error_message(katamari):
-    expect(katamari.result.output).to(contain('Path "{}" does not exist.'.format(katamari.source)))
+    expect(katamari.result.output).to(contain(katamari.error_message))
     return
 
 # ******************** no arguments ******************** #
 
 
-#@scenario("The user calls the get subcommand with no options")
-#def test_no_arguments():
-#    return
+@scenario("The user calls the get subcommand with no options")
+def test_no_arguments():
+    return
 
 #  Given a cli runner
 
 
-#@when("the user calls the get subcommand with no options")
-#def no_options(katamari, mocker):
-#    katamari.getter = mocker.MagicMock(spec=GetPackets)
-#    mocker.patch("packets.main.GetPackets", katamari.getter)
-#    katamari.result = katamari.runner.invoke(main, [GetOption.subcommand])
-#    return
-#
-#@then("it returns an error status")
-#def check_error(katamari):
-#    expect(katamari.result.exit_code).to(equal(ExitCode.error))
-#
-#
-#@then("the GetPackets object is built with the defaults")
-#def check_get_packets_built_without_arguments(katamari):
-#    katamari.getter.assert_called_once_with(start=GetDefaults.start)
-#    katamari.getter.assert_called_once_with(end=GetDefaults.end)
-#    return
-#
-#
-#@and_also("the GetPackets object is run")
-#def check_get_packets_called(katamari):
-#    return
+@when("the user calls the get subcommand with no options")
+def no_options(katamari, mocker):
+    katamari.getter = mocker.MagicMock(spec=GetPackets)
+    mocker.patch("packets.main.GetPackets", katamari.getter)
+    katamari.result = katamari.runner.invoke(main, [GetOption.subcommand])
+    katamari.error_message = 'Error: Missing argument "source"'    
+    return
+
+# Then it returns an error status
+# And it outputs an error message
+
+# ******************** all the arguments ******************** #
+
+
+@scenario("The user calls the subcommand with start, end, and compression")
+def test_all_arguments():
+    return
+
+#  Given a cli runner
+
+
+@when("the user calls the get subcommand with all the options")
+def all_the_options(katamari, mocker, faker):
+    katamari.getter_instance = mocker.MagicMock()
+    katamari.getter = mocker.MagicMock(spec=GetPackets,
+                                       return_value=katamari.getter_instance)
+    
+    mocker.patch("packets.main.GetPackets", katamari.getter)
+    katamari.source = "/tmp"
+    katamari.target = faker.unix_partition()
+    katamari.start = faker.time(pattern="%H:%M:%S")
+    katamari.end = faker.time(pattern="%H:%M:%S")
+    katamari.compression = random.choice("gzip bz2".split())
+    
+    katamari.result = katamari.runner.invoke(main, [GetOption.subcommand,
+                                                    katamari.source,
+                                                    katamari.target,
+                                                    "--start", katamari.start,
+                                                    "--end", katamari.end,
+                                                    "--compression", katamari.compression])
+    katamari.arguments = dict(source=katamari.source,
+                              target=katamari.target,
+                              start=katamari.start,
+                              end=katamari.end)
+    return
+
+#  Then it returns an okay status
+#  And the GetPackets object is built with the expected arguments
+#  And the GetPackets object is run

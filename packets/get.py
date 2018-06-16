@@ -10,6 +10,7 @@ class GetDefaults:
     """Default Values when getting packets"""
     start = None
     end = None
+    compression="gzip"
 
 
 class GetPackets(AlpacaBase):
@@ -23,6 +24,7 @@ class GetPackets(AlpacaBase):
      start: date/time for the earliest packet
      end: date/time for the latest packets you want
     """
+    compressions=["bz2", "gzip", "zip"]
     def __init__(self, source, target, *args, **kwargs):
         self.source = source
         self.target = target

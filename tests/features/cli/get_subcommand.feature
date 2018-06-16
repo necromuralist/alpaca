@@ -29,3 +29,10 @@ Scenario: The user calls the get subcommand with no options
   When the user calls the get subcommand with no options
   Then it returns an error status
   And it outputs an error message
+
+Scenario: The user calls the subcommand with start, end, and compression
+  Given a cli runner
+  When the user calls the get subcommand with all the options
+  Then it returns an okay status
+  And the GetPackets object is built with the expected arguments
+  And the GetPackets object is run
