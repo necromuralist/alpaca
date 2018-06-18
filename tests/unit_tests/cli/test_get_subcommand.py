@@ -118,6 +118,7 @@ def call_with_source_and_target(katamari, mocker, faker):
     expect(katamari.result.exit_code).to(equal(ExitCode.okay))
     katamari.arguments = dict(source=katamari.source,
                               target=katamari.target,
+                              source_glob=GetDefaults.glob,
                               start=GetDefaults.start,
                               end=GetDefaults.end)
     return
@@ -206,6 +207,7 @@ def all_the_options(katamari, mocker, faker):
     mocker.patch("packets.main.GetPackets", katamari.getter)
     katamari.source = "/tmp"
     katamari.target = faker.unix_partition()
+    katamari.source_glob = "channel_6*"
     katamari.start = faker.time(pattern="%H:%M:%S")
     katamari.end = faker.time(pattern="%H:%M:%S")
     katamari.compression = random.choice("gzip bz2".split())
@@ -213,11 +215,13 @@ def all_the_options(katamari, mocker, faker):
     katamari.result = katamari.runner.invoke(main, [GetOption.subcommand,
                                                     katamari.source,
                                                     katamari.target,
+                                                    "--glob", katamari.source_glob,
                                                     "--start", katamari.start,
                                                     "--end", katamari.end,
                                                     "--compression", katamari.compression])
     katamari.arguments = dict(source=katamari.source,
                               target=katamari.target,
+                              source_glob=katamari.source_glob,
                               start=katamari.start,
                               end=katamari.end)
     return

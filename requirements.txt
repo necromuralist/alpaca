@@ -19,10 +19,11 @@ docutils==0.14            # via nikola, sphinx
 doit==0.31.1              # via nikola
 execnet==1.5.0            # via pytest-xdist
 expects==0.8.0
+faker==0.8.16             # via pytest-faker
 first==2.0.1              # via pip-tools
 ghp-import2==1.0.1
 glob2==0.6                # via pytest-bdd
-idna==2.6                 # via requests
+idna==2.7                 # via requests
 imagesize==1.0.0          # via sphinx
 jinja2==2.10              # via sphinx
 livereload==2.5.2         # via sphinx-autobuild
@@ -43,31 +44,33 @@ pillow==5.1.0             # via nikola
 pip-tools==2.0.2
 pipdeptree==0.12.1
 pluggy==0.6.0             # via pytest
-port-for==0.3.1           # via sphinx-autobuild
+port_for==0.3.1           # via sphinx-autobuild
 py==1.5.3                 # via pytest
 pygments==2.2.0           # via nikola, sphinx
 pyinotify==0.9.6          # via doit
 pyparsing==2.2.0          # via packaging
 pyrss2gen==1.1            # via nikola
 pytest-bdd==2.21.0
+pytest-faker==2.0.0
 pytest-forked==0.2        # via pytest-xdist
 pytest-mock==1.10.0
 pytest-xdist==1.22.2
 pytest==3.6.1             # via pytest-bdd, pytest-forked, pytest-mock, pytest-xdist
-python-dateutil==2.7.3    # via nikola
+python-dateutil==2.7.3    # via faker, nikola
 pytz==2018.4              # via babel
 pyyaml==3.12              # via sphinx-autobuild, watchdog
-requests==2.18.4          # via nikola, sphinx
-six==1.11.0               # via livereload, more-itertools, packaging, parse-type, pip-tools, pytest, pytest-bdd, python-dateutil, sphinx
+requests==2.19.1          # via nikola, sphinx
+six==1.11.0               # via faker, livereload, more-itertools, packaging, parse-type, pip-tools, pytest, pytest-bdd, python-dateutil, sphinx
 snowballstemmer==1.2.1    # via sphinx
 sphinx-autobuild==0.7.1
 sphinx-bootstrap-theme==0.6.5
 sphinx==1.7.5             # via sphinxcontrib-plantuml
 sphinxcontrib-plantuml==0.11
 sphinxcontrib-websupport==1.1.0  # via sphinx
+text-unidecode==1.2       # via faker
 tornado==5.0.2            # via livereload, sphinx-autobuild
 unidecode==1.0.22         # via nikola
-urllib3==1.22             # via requests
+urllib3==1.23             # via requests
 watchdog==0.8.3           # via sphinx-autobuild
 webassets==0.12.1
 wheel==0.31.1

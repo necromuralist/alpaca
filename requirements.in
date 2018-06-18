@@ -4,6 +4,7 @@ Nikola
 pip-tools
 pipdeptree
 pytest-bdd
+pytest-faker
 pytest-mock
 pytest-xdist
 sphinx-autobuild
