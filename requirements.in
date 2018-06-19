@@ -1,8 +1,13 @@
+autopep8
+dateparser
 expects
 ghp-import2
+ipython
 Nikola
 pip-tools
 pipdeptree
+ptpython
+pudb
 pytest-bdd
 pytest-faker
 pytest-mock
@@ -13,3 +18,4 @@ sphinxcontrib-plantuml
 webassets
 wheel
 ws4py
+yapf
