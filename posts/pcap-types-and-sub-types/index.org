@@ -1,0 +1,43 @@
+#+BEGIN_COMMENT
+.. title: PCAP Types and Sub-Types
+.. slug: pcap-types-and-sub-types
+.. date: 2018-08-22 12:37:52 UTC-07:00
+.. tags: pcap info
+.. category: pcap
+.. link: 
+.. description: The PCAP types and sub-types we need.
+.. type: text
+#+END_COMMENT
+
+* Background
+  These are the 802.11 frame types and sub-types you can use to help filter out packets. The types and sub-types are represented in the frames as integers (well, really bits), but it's usually easier to remember the names (maybe).
+
+* Types
+  There are three main types that you need.
+
+  | Name       | Identifier |
+  |------------+------------|
+  | Management |          0 |
+  | Control    |          1 |
+  | Data       |          2 |
+
+* Sub-Types
+  Within each of the types there are sub-types to identify what kind of frames they are. There are a lot of them so I'm only going to list the ones that I think are the most useful right now.
+
+* Management
+
+| Name                                           | Identifier |
+|------------------------------------------------+------------|
+| Association Request                            |          0 |
+| Association Response                           |          1 |
+| Reassociation Request                          |          2 |
+| Reassociation Response                         |          3 |
+| Probe Request                                  |          4 |
+| Probe Response                                 |          5 |
+| /Reserved/                                     |          6 |
+| /Reserved/                                     |          7 |
+| Beacon                                         |          8 |
+| Announcement Traffic Indication Message (ATIM) |          9 |
+| Disassociate                                   |         10 |
+| Authentication                                 |         11 |
+| Deauthentication                               |         12 |

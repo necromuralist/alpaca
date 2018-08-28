@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture</title><link>https://github.com/necromuralist/packet_capture/</link><description>Documentation For Some Packet Capturing Code</description><atom:link href="https://github.com/necromuralist/packet_capture/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Tue, 28 Aug 2018 01:32:50 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PCAP Types and Sub-Types</title><link>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-orgcfa73ff" class="outline-2"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about pcap info)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/pcap-info.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Tue, 28 Aug 2018 01:32:50 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PCAP Types and Sub-Types</title><link>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-orgcfa73ff" class="outline-2"&gt;
 &lt;h2 id="orgcfa73ff"&gt;Background&lt;/h2&gt;
 &lt;div class="outline-text-2" id="text-orgcfa73ff"&gt;
 &lt;p&gt;
@@ -143,19 +143,4 @@ Within each of the types there are sub-types to identify what kind of frames the
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description><category>pcap info</category><guid>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</guid><pubDate>Wed, 22 Aug 2018 19:37:52 GMT</pubDate></item><item><title>Project ALPaCa</title><link>https://github.com/necromuralist/packet_capture/posts/project-alpaca/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-org00bc2a6" class="outline-2"&gt;
-&lt;h2 id="org00bc2a6"&gt;What's this about, then?&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org00bc2a6"&gt;
-&lt;p&gt;
-An &lt;a href="https://en.wikipedia.org/wiki/Alpaca"&gt;Alpaca&lt;/a&gt; is a South American animal that is similar to a llama. Project ALPaCa is A Little Packet Capturer project that I'm creating to hopefully make packet capturing easier for me. One of the problems with something as complicated as packet capture and packet analysis is that there is no real easy first step. Right from the start you have to try and learn a whole bunch of things, read a lot of (probably poorly written) documentation and at the same time try it all out. I intend for Project ALPaCa to abstract the capturing and gathering of packets so that I'll have something that both does the capturing and acts as a static document about how to do it so I don't have to rely on my &lt;code&gt;.history&lt;/code&gt; file (or worse, my memory).
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="outline-container-org83de33d" class="outline-2"&gt;
-&lt;h2 id="org83de33d"&gt;Okay, but… what?&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org83de33d"&gt;
-&lt;p&gt;
-I'm primarily trying to learn more about wireless packet capturing and analysis. There's a lot of different programs and hardware out there, most of which claims that they have the solution - or at least a better solution- than the others, but I'm fundamentally not a technologist. I want to learn the concepts more than I want to learn some specific program. So I'm going to try and put into code the things that I learn so that I don't have to really learn them, and maybe write up what I find as well. Though this is &lt;i&gt;Project ALPaCa&lt;/i&gt;, this notebook is more my &lt;i&gt;Adventures In Packet Capturing&lt;/i&gt;, but I couldn't find a good acronym based on AIPC.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description><category>alpaca</category><guid>https://github.com/necromuralist/packet_capture/posts/project-alpaca/</guid><pubDate>Sun, 10 Jun 2018 21:47:23 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;</description><category>pcap info</category><guid>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</guid><pubDate>Wed, 22 Aug 2018 19:37:52 GMT</pubDate></item></channel></rss>

@@ -6876,3 +6876,17 @@ button.close {
 .panel-info .panel-title {
   color: #fff;
 }
+
+.full-width {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+#home {
+    background-color: white;
+}
+
+.org-left, .org-right {
+    padding-left: 10px;
+}

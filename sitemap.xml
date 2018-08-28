@@ -15,11 +15,11 @@
  </url>
  <url>
   <loc>https://github.com/necromuralist/packet_capture/archive.html</loc>
-  <lastmod>2018-06-10T21:56:00Z</lastmod>
+  <lastmod>2018-08-28T01:32:00Z</lastmod>
  </url>
  <url>
   <loc>https://github.com/necromuralist/packet_capture/categories/</loc>
-  <lastmod>2018-06-10T21:56:00Z</lastmod>
+  <lastmod>2018-08-28T01:32:00Z</lastmod>
  </url>
  <url>
   <loc>https://github.com/necromuralist/packet_capture/categories/alpaca/</loc>
@@ -30,8 +30,20 @@
   <lastmod>2018-06-10T21:56:00Z</lastmod>
  </url>
  <url>
+  <loc>https://github.com/necromuralist/packet_capture/categories/cat_pcap/</loc>
+  <lastmod>2018-08-28T01:32:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://github.com/necromuralist/packet_capture/categories/pcap-info/</loc>
+  <lastmod>2018-08-28T01:32:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://github.com/necromuralist/packet_capture/posts/</loc>
-  <lastmod>2018-06-10T21:56:00Z</lastmod>
+  <lastmod>2018-08-28T01:32:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</loc>
+  <lastmod>2018-08-28T01:32:00Z</lastmod>
  </url>
  <url>
   <loc>https://github.com/necromuralist/packet_capture/posts/project-alpaca/</loc>
