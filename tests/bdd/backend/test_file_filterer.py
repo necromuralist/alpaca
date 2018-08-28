@@ -22,8 +22,8 @@ import pytest_bdd
 from ..fixtures import katamari
 
 # software under test
-from packets.get import FileFilterer
-from packets.errors import ConfigurationError
+from alpaca.get import FileFilterer
+from alpaca.errors import ConfigurationError
 
 and_also = then
 And = when 
@@ -120,7 +120,7 @@ def setup_non_existent_source(katamari, faker, mocker):
 
 @when("the user builds the bad FileFilterer object")
 def build_bad_filterer(katamari, mocker):
-    mocker.patch("packets.get.Path", katamari.path_mock)
+    mocker.patch("alpaca.get.Path", katamari.path_mock)
     def bad_call():
         FileFilterer(**katamari.arguments)
         return

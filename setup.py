@@ -11,16 +11,16 @@ except ImportError:
     from ez_setup import use_setuptools
     use_setuptools()
 
-setup(name='packets',
+setup(name='alpaca',
       version='2018.6.4',
       description=("Code to pull some packet-files."),
       author="russell",
       platforms=['linux'],
-      url='https://github.azc.ext.hp.com/russell-nakamura1/packets',
-      author_email="russell.nakamura1@hp.com",
+      url='https://github.com/necromuralist/alpaca',
+      author_email="necromuralist@protonmail.com",
       packages=find_packages(),
       entry_points="""
       [console_scripts]
-      packets=packets.main:main
+      packets=alpaca.main:main
       """
       )

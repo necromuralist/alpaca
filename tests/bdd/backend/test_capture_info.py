@@ -26,7 +26,7 @@ from .samples import (
 )
 
 # software under test
-from packets.get import CaptureInfo
+from alpaca.get import CaptureInfo
 
 scenario = partial(pytest_bdd.scenario, '../../features/backend/capture_info.feature')
 

@@ -27,8 +27,8 @@ from .common import (
     )
 
 # software under test
-from packets.main import main
-from packets.get import (
+from alpaca.main import main
+from alpaca.get import (
     GetDefaults,
     GetPackets,
     )
@@ -109,7 +109,7 @@ def call_with_source_and_target(katamari, mocker, faker):
     katamari.getter_instance = mocker.MagicMock()
     katamari.getter = mocker.MagicMock(spec=GetPackets,
                                        return_value=katamari.getter_instance)
-    mocker.patch("packets.main.GetPackets", katamari.getter)
+    mocker.patch("alpaca.main.GetPackets", katamari.getter)
     katamari.source = "/tmp"
     katamari.target = faker.unix_partition()
     katamari.result = katamari.runner.invoke(main, [GetOption.subcommand,
@@ -180,7 +180,7 @@ def test_no_arguments():
 @when("the user calls the get subcommand with no options")
 def no_options(katamari, mocker):
     katamari.getter = mocker.MagicMock(spec=GetPackets)
-    mocker.patch("packets.main.GetPackets", katamari.getter)
+    mocker.patch("alpaca.main.GetPackets", katamari.getter)
     katamari.result = katamari.runner.invoke(main, [GetOption.subcommand])
     katamari.error_message = 'Error: Missing argument "source"'    
     return
@@ -204,7 +204,7 @@ def all_the_options(katamari, mocker, faker):
     katamari.getter = mocker.MagicMock(spec=GetPackets,
                                        return_value=katamari.getter_instance)
     
-    mocker.patch("packets.main.GetPackets", katamari.getter)
+    mocker.patch("alpaca.main.GetPackets", katamari.getter)
     katamari.source = "/tmp"
     katamari.target = faker.unix_partition()
     katamari.source_glob = "channel_6*"

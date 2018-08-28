@@ -26,8 +26,8 @@ import pytest_bdd
 from ..fixtures import katamari
 
 # software under test
-from packets.get import GetPackets
-from packets.errors import ConfigurationError
+from alpaca.get import GetPackets
+from alpaca.errors import ConfigurationError
 
 And = when
 scenario = partial(pytest_bdd.scenario, '../../features/backend/get_packets.feature')

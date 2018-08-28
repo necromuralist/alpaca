@@ -26,7 +26,7 @@ from .common import (
     )
 
 # software under test
-from packets.main import main
+from alpaca.main import main
 
 scenario = partial(pytest_bdd.scenario, '../../features/cli/root_packets_command.feature')
 
