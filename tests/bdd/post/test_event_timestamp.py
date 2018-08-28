@@ -32,13 +32,19 @@ from alpaca.post.packets import (
 )
 
 And = when
-scenario = partial(pytest_bdd.scenario,
-                   '../../features/event_timestamp.feature')
-MANAGEMENT = 0
+and_also = then
+scenario = partial(pytest_bdd.scenario, '../../features/event_timestamp.feature')
+
+# types
+MANAGEMENT, CONTROL = 0, 1
+
+# sub-types
 PROBE_REQUEST, PROBE_RESPONSE = 4, 5
-AUTHENTICATION_REQUEST = AUTHENTICATION_RESPONSE = 11
+AUTHENTICATION_REQUEST = AUTHENTICATION = AUTHENTICATION_RESPONSE = 11
 ASSOCIATION_REQUEST, ASSOCIATION_RESPONSE = 0, 1
-NOT_STARTED = 0
+
+# WPA Handshake
+STEP_ONE = 1
 
 # ******************** Constructor ******************** #
 
@@ -77,7 +83,6 @@ def the_timestamper_has_the_expected_settings(katamari):
     expect(katamari.timestamper.ssid).to(equal(katamari.ssid))
     expect(katamari.timestamper.last).to(equal(katamari.last))
     expect(katamari.timestamper.log).to(equal(katamari.log))
-    expect(katamari.timestamper.handshake_step).to(equal(NOT_STARTED))
     return
 
 # ******************** Bad log-file ******************** #
@@ -348,9 +353,7 @@ def get_association_response(katamari):
 
 #    Then it has the expected timestamp
 
-# ******************** Four-Way WPA Handshake ******************** #
-
-# ********** step one ********** #
+# ******************** four-way handshake ******************** #
 
 
 @scenario("The AP starts the four-way handshake")
@@ -363,14 +366,30 @@ def test_start_of_handshake():
 
 
 @And("the start of the handshake is in the packets")
-def add_anonce_packet(katamari):
+def add_handshake_start(katamari):
+    katamari.authentication_nonce = build_mock_packet(
+        katamari.ap_mac,
+        katamari.client_mac,
+        CONTROL,
+        AUTHENTICATION,
+        katamari.timestamper._packets[-1].time,
+    )
+    katamari.timestamper._packets.append(katamari.authentication_nonce)
     return
 
 
 @And("the authentication nonce is retrieved")
 def get_anonce(katamari):
-    katamari.actual = katamari.timestamper.authentication_nonce
+    katamari.actual = katamari.timestamper.authentication_nonce.time
+    katamari.expected = katamari.authentication_nonce.time
+    katamari.expected_handshake_step = STEP_ONE
     return
 
 #  Then it has the expected timestamp
-#  And the timestamper's step attribute is correct
+
+
+@and_also("the timestamper's step attribute is correct")
+def check_handshake_step(katamari):
+    expect(katamari.timestamper.handshake_step).to(
+        equal(katamari.expected_handshake_step))
+    return

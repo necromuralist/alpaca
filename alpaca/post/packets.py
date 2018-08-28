@@ -284,3 +284,14 @@ class EventTimestamp(BaseThing):
         """
         if self._authentication_nonce is None:
             self.logger.debug("Looking for the anonce packet")
+            for packet in self.packets:
+                if all((
+                        packet.addr2 == self.ap_mac,
+                        packet.addr1 == self.client_mac,
+                        packet.type == FrameType.control,
+                        packet.subtype == FrameType.subtype.authentication,
+                )):
+                    self.logger.debug("found packet: %s", packet)
+                    self._authentication_nonce = packet
+                    self.handshake_step = Handshake.authentication_nonce
+        return self._authentication_nonce
