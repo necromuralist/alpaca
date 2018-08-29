@@ -9,6 +9,21 @@ from scapy.sendrecv import sniff
 
 LOG_FORMAT = "%(asctime)s: %(levelname)s: (%(module)s %(funcName)s): %(message)s"
 
+def traverse(source):
+    """Generates whatever is in the source
+
+    This is intended to help pick a spot because scapy doesn't seem to support slicing
+
+    Args:
+     source: iterable to traverse
+
+    Yields:
+     next item in the source
+    """
+    for item in source:
+        yield item
+    return
+
 
 class ConfigurationError(Exception):
     """an error indicating we think something was wrong with the setup"""
@@ -71,7 +86,7 @@ class BaseThing:
             formatter = logging.Formatter(self.log_format)
             handler.setFormatter(formatter)
             self._logger.addHandler(handler)
-            self._logger.setLevel(self.log_level)
+            self._logger.setLevel(self.log_level)            
         return self._logger
 
 
@@ -101,7 +116,11 @@ class EventTimestamp(BaseThing):
         self._association_request = None
         self._association_response = None
         self._authentication_nonce = None
+        self._supplicant_nonce = None
+        self._group_temporal_key = None
+        self._acknowledgement = None
         self.handshake_step = Handshake.not_started
+        self.last_event_index = 0
         return
 
     @property
@@ -224,7 +243,7 @@ class EventTimestamp(BaseThing):
                         packet.type == FrameType.management,
                         packet.subtype == FrameType.subtype.authentication,
                 )):
-                    self.logger.debug("found pcaket: %s", packet)
+                    self.logger.debug("found packet: %s", packet)
                     self._authentication_response = packet
                     if not self.last:
                         self.logger.debug("Breaking on first packet")
@@ -273,6 +292,9 @@ class EventTimestamp(BaseThing):
                 )):
                     self.logger.debug("found packet: %s", packet)
                     self._association_response = packet
+                    if not self.last:
+                        self.logger.debug("Breaking on the first packet")
+                        break
         return self._association_response
 
     @property
@@ -284,7 +306,7 @@ class EventTimestamp(BaseThing):
         """
         if self._authentication_nonce is None:
             self.logger.debug("Looking for the anonce packet")
-            for packet in self.packets:
+            for index, packet in enumerate(self.packets):
                 if all((
                         packet.addr2 == self.ap_mac,
                         packet.addr1 == self.client_mac,
@@ -294,4 +316,103 @@ class EventTimestamp(BaseThing):
                     self.logger.debug("found packet: %s", packet)
                     self._authentication_nonce = packet
                     self.handshake_step = Handshake.authentication_nonce
+                    self.last_event_index = index
+                    break
         return self._authentication_nonce
+
+    @property
+    def supplicant_nonce(self):
+        """Client's response to the authentication nonce
+
+        Returns:
+         scapy.layers.dot11.RadioTap: Supplicant Nonce Packet
+        """
+        if self._supplicant_nonce is None:
+            self.logger.debug("Looking for the supplicant packet")
+            packets = traverse(self.packets)
+            for packet in range(self.last_event_index):
+                _ = packets.__next__()
+            for index, packet in enumerate(packets):
+                if all((
+                        packet.addr2 == self.client_mac,
+                        packet.addr1 == self.ap_mac,
+                        packet.type == FrameType.control,
+                        packet.subtype == FrameType.subtype.authentication,
+                )):
+                    self.logger.debug("found packet: %s", packet)
+                    self._supplicant_nonce = packet
+                    self.handshake_step = Handshake.supplicant_nonce
+                    self.last_event_index += index + 1
+                    break
+        return self._supplicant_nonce
+
+    @property
+    def group_temporal_key(self):
+        """AP's response to the supplicant nonce
+        
+        Returns:
+         scapy.layers.dot11.RadioTap: Group Temporal Key
+        """
+        if self._group_temporal_key is None:
+            self.logger.debug("Looking for the GTK")
+            packets = traverse(self.packets)
+            for packet in range(self.last_event_index):
+                _ = packets.__next__()
+            for index, packet in enumerate(packets):
+                if all((
+                        packet.addr2 == self.ap_mac,
+                        packet.addr1 == self.client_mac,
+                        packet.type == FrameType.control,
+                        packet.subtype == FrameType.subtype.authentication,                        
+                )):
+                    self.logger.debug("found packet: %s", packet)
+                    self._group_temporal_key = packet
+                    self.handshake_step = Handshake.group_temporal_key
+                    self.last_event_index += index + 1
+                    break
+        return self._group_temporal_key
+
+    @property
+    def acknowledgement(self):
+        """client acknowledgement for the gtk"""
+        if self._acknowledgement is None:
+            self.logger.debug("Looking for the acknowledgement")
+            packets = traverse(self.packets)
+            for packet in range(self.last_event_index):
+                _ = packets.__next__()
+
+            for index, packet in enumerate(packets):
+                if all((
+                        packet.addr2 == self.client_mac,
+                        packet.addr1 == self.ap_mac,
+                        packet.type == FrameType.control,
+                        packet.subtype == FrameType.subtype.authentication,
+                )):
+                    self.logger.debug("found packet: %s", packet)
+                    self._acknowledgement = packet
+                    self.handshake_step += 1
+                    self.last_event_index += index + 1
+                    break
+        return self._acknowledgement
+
+    def __call__(self):
+        """sets up the attributes
+
+        This is meant to set the attributes in order. The reason for this
+        is the four-way handshake is relying on the previous step setting the
+        index for the packet it grabbed, since scapy doesn't seem
+        to identify the steps in the handshake (from what I've found so far)
+
+        It traverses the packets each time so it is inefficient
+        Fix it later
+        """
+        self.probe_request
+        self.probe_response
+        self.authentication_request
+        self.authentication_response
+        self.association_request
+        self.association_response
+        self.authentication_nonce
+        self.supplicant_nonce
+        self.group_temporal_key
+        return

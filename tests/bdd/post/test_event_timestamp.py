@@ -44,7 +44,7 @@ AUTHENTICATION_REQUEST = AUTHENTICATION = AUTHENTICATION_RESPONSE = 11
 ASSOCIATION_REQUEST, ASSOCIATION_RESPONSE = 0, 1
 
 # WPA Handshake
-STEP_ONE = 1
+STEP_ONE, STEP_TWO, STEP_THREE, STEP_FOUR = 1, 2, 3, 4
 
 # ******************** Constructor ******************** #
 
@@ -240,9 +240,10 @@ def setup_packets(katamari, mocker):
 
 @And("the last probe request is retrieved")  # noqa: F811
 def get_the_probe_request(katamari):
+    katamari.timestamper()
     katamari.timestamper.last = True
     katamari.actual = katamari.timestamper.probe_request.time
-    katamari.expected = katamari.probe_request2.time
+    katamari.expected = katamari.probe_request2.time    
     return
 
 
@@ -393,3 +394,116 @@ def check_handshake_step(katamari):
     expect(katamari.timestamper.handshake_step).to(
         equal(katamari.expected_handshake_step))
     return
+
+# ********** client snonce ********** #
+
+
+@scenario("The client responds to the start of the handshake")
+def test_snonce():
+    return
+
+#  Given a set of settings for the event timestamper
+#  When the timestamper is built
+#  And the packets are set up
+#  And the start of the handshake is in the packets
+
+
+@And("the clients response to the start of the handshake is in the packets")
+def add_snonce(katamari):
+    katamari.supplicant_nonce = build_mock_packet(
+        katamari.client_mac,
+        katamari.ap_mac,
+        CONTROL,
+        AUTHENTICATION,
+        katamari.timestamper.packets[-1].time
+    )
+    katamari.timestamper.packets.append(katamari.supplicant_nonce)
+    katamari.expected_handshake_step = STEP_TWO
+    return
+
+
+@And("the authentication snonce is retrieved")
+def get_snonce(katamari):
+    katamari.actual = katamari.timestamper.supplicant_nonce.time
+    katamari.expected = katamari.supplicant_nonce.time
+    return
+
+#  Then it has the expected timestamp
+#  And the timestamper's step attribute is correct
+
+# ********** group temporal key ********** #
+
+
+@scenario("The AP sends the GTK to the client")
+def test_gtk():
+    return
+
+#  Given a set of settings for the event timestamper
+#  When the timestamper is built
+#  And the packets are set up
+#  And the start of the handshake is in the packets
+#  And the clients response to the start of the handshake is in the packets
+
+
+@And("the AP's response to the snonce is in the packets")
+def add_gtk(katamari):
+    katamari.group_temporal_key = build_mock_packet(
+        katamari.ap_mac,
+        katamari.client_mac,
+        CONTROL,
+        AUTHENTICATION,
+        katamari.timestamper.packets[-1].time
+    )
+    katamari.timestamper.packets.append(katamari.group_temporal_key)
+    katamari.expected_handshake_step = STEP_THREE
+    return
+
+
+@And("the group temporal key is retrieved")
+def get_gtk(katamari):
+    katamari.timestamper()
+    katamari.actual = katamari.timestamper.group_temporal_key.time
+    katamari.expected = katamari.group_temporal_key.time
+    return
+
+#  Then it has the expected timestamp
+#  And the timestamper's step attribute is correct
+
+# ********** client acknowledgement ********** #
+
+
+@scenario("The client sends the GTK acknowledgement to the AP")
+def test_client_acknowledgement():
+    return
+
+#  Given a set of settings for the event timestamper
+#  When the timestamper is built
+#  And the packets are set up
+#  And the start of the handshake is in the packets
+#  And the clients response to the start of the handshake is in the packets
+#  And the AP's response to the snonce is in the packets
+
+
+@And("the client's response to the GTK is in the packets")
+def add_client_acknowledgement(katamari):
+    katamari.acknowledgement = build_mock_packet(
+        katamari.client_mac,
+        katamari.ap_mac,
+        CONTROL,
+        AUTHENTICATION,
+        katamari.timestamper.packets[-1].time
+    )
+    katamari.timestamper.packets.append(katamari.acknowledgement)
+    return
+
+
+@And("the client's acknowledgement is retrieved")
+def get_client_acknowledgement(katamari):
+    katamari.timestamper()
+    katamari.actual = katamari.timestamper.acknowledgement.time
+    katamari.expected = katamari.acknowledgement.time
+    katamari.expected_handshake_step = STEP_FOUR
+    return
+
+#  Then it has the expected timestamp
+#  And the timestamper's step attribute is correct

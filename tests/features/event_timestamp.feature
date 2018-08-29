@@ -66,3 +66,36 @@ Scenario: The AP starts the four-way handshake
   And the authentication nonce is retrieved
   Then it has the expected timestamp
   And the timestamper's step attribute is correct
+
+Scenario: The client responds to the start of the handshake
+  Given a set of settings for the event timestamper
+  When the timestamper is built
+  And the packets are set up
+  And the start of the handshake is in the packets
+  And the clients response to the start of the handshake is in the packets
+  And the authentication snonce is retrieved
+  Then it has the expected timestamp
+  And the timestamper's step attribute is correct
+
+Scenario: The AP sends the GTK to the client
+  Given a set of settings for the event timestamper
+  When the timestamper is built
+  And the packets are set up
+  And the start of the handshake is in the packets
+  And the clients response to the start of the handshake is in the packets
+  And the AP's response to the snonce is in the packets
+  And the group temporal key is retrieved
+  Then it has the expected timestamp
+  And the timestamper's step attribute is correct
+
+Scenario: The client sends the GTK acknowledgement to the AP
+  Given a set of settings for the event timestamper
+  When the timestamper is built
+  And the packets are set up
+  And the start of the handshake is in the packets
+  And the clients response to the start of the handshake is in the packets
+  And the AP's response to the snonce is in the packets
+  And the client's response to the GTK is in the packets
+  And the client's acknowledgement is retrieved
+  Then it has the expected timestamp
+  And the timestamper's step attribute is correct
