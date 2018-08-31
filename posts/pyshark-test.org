@@ -1,0 +1,24 @@
+#+BEGIN_COMMENT
+.. title: PyShark Test
+.. slug: pyshark-test
+.. date: 2018-08-30 13:40:58 UTC-07:00
+.. tags: pyshark python experiment notes
+.. category: PyShark
+.. link: 
+.. description: A first test of pyshark.
+.. type: text
+#+END_COMMENT
+
+* Introduction
+  This is a first look at [[https://github.com/KimiNewt/pyshark][pyshark]]. Since I'm mostly interested in WiFi I'm going to look at that here. Before this code is run I put it in [[https://en.wikipedia.org/wiki/Monitor_mode][monitor mode]] using [[https://www.aircrack-ng.org/doku.php?id=airmon-ng][airmon-ng]] a shell-script to help you do this.
+* Imports
+#+BEGIN_SRC ipython :session pyshark :results none
+import pyshark
+#+END_SRC
+* The Readme Example
+  This first example is taken from the [[https://github.com/KimiNewt/pyshark][repository]] README file.
+** Reading the Packets
+#+BEGIN_SRC ipython :session pyshark :results none
+
+#+END_SRC
+* Inspecting the Packets
