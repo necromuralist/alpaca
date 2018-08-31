@@ -109,40 +109,6 @@ print(capture[0])
 . ~/.virtualenvs/alpaca/
 python /tmp/readme_1.py
 #+END_SRC
-
-#+RESULTS:
-Packet (Length: 44)
-Layer RADIOTAP:
-	Header revision: 0
-	Header pad: 0
-	Header length: 18
-	Present flags
-	Present flags word: 0x0000482e
-	.... .... .... .... .... .... .... ...0 = TSFT: Absent
-	.... .... .... .... .... .... .... ..1. = Flags: Present
-	.... .... .... .... .... .... .... .1.. = Rate: Present
-	.... .... .... .... .... .... .... 1... = Channel: Present
-	.... .... .... .... .... .... ...0 .... = FHSS: Absent
-	.... .... .... .... .... .... ..1. .... = dBm Antenna Signal: Present
-	.... .... .... .... .... .... .0.. .... = dBm Antenna Noise: Absent
-	.... .... .... .... .... .... 0... .... = Lock Quality: Absent
-	.... .... .... .... .... ...0 .... .... = TX Attenuation: Absent
-	.... .... .... .... .... ..0. .... .... = dB TX Attenuation: Absent
-	.... .... .... .... .... .0.. .... .... = dBm TX Power: Absent
-	.... .... .... .... .... 1... .... .... = Antenna: Present
-	.... .... .... .... ...0 .... .... .... = dB Antenna Signal: Absent
-	.... .... .... .... ..0. .... .... .... = dB Antenna Noise: Absent
-	.... .... .... .... .1.. .... .... .... = RX flags: Present
-	.... .... .... .0.. .... .... .... .... = Channel+: Absent
-	.... .... .... 0... .... .... .... .... = MCS information: Absent
-	.... .... ...0 .... .... .... .... .... = A-MPDU Status: Absent
-	.... .... ..0. .... .... .... .... .... = VHT information: Absent
-	.... .... .0.. .... .... .... .... .... = frame timestamp: Absent
-	.... .... 0... .... .... .... .... .... = HE information: Absent
-	.... ...0 .... .... .... .... .... .... = HE-MU information: Absent
-	...0 000. .... .... .... .... .... .... = Reserved: 0x0
-	..0. .... .... .... .... .... .... .... = Radiotap NS next: False
-	.0.. .... .... .... .... .... .... .... = Vendor NS next: False
 	0... .... .... .... .... .... .... .... = Ext: Absent
 	Flags: 0x00
 	.... ...0 = CFP: False
