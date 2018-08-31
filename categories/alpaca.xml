@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about alpaca)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/alpaca.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Sun, 10 Jun 2018 21:56:53 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Project ALPaCa</title><link>https://github.com/necromuralist/packet_capture/posts/project-alpaca/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-org00bc2a6" class="outline-2"&gt;
-&lt;h2 id="org00bc2a6"&gt;What's this about, then?&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org00bc2a6"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about alpaca)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/alpaca.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Fri, 31 Aug 2018 02:46:03 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Project ALPaCa</title><link>https://github.com/necromuralist/packet_capture/posts/project-alpaca/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-orgd1e6416" class="outline-2"&gt;
+&lt;h2 id="orgd1e6416"&gt;What's this about, then?&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgd1e6416"&gt;
 &lt;p&gt;
 An &lt;a href="https://en.wikipedia.org/wiki/Alpaca"&gt;Alpaca&lt;/a&gt; is a South American animal that is similar to a llama. Project ALPaCa is A Little Packet Capturer project that I'm creating to hopefully make packet capturing easier for me. One of the problems with something as complicated as packet capture and packet analysis is that there is no real easy first step. Right from the start you have to try and learn a whole bunch of things, read a lot of (probably poorly written) documentation and at the same time try it all out. I intend for Project ALPaCa to abstract the capturing and gathering of packets so that I'll have something that both does the capturing and acts as a static document about how to do it so I don't have to rely on my &lt;code&gt;.history&lt;/code&gt; file (or worse, my memory).
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org83de33d" class="outline-2"&gt;
-&lt;h2 id="org83de33d"&gt;Okay, but… what?&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org83de33d"&gt;
+&lt;div id="outline-container-orged17502" class="outline-2"&gt;
+&lt;h2 id="orged17502"&gt;Okay, but… what?&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orged17502"&gt;
 &lt;p&gt;
 I'm primarily trying to learn more about wireless packet capturing and analysis. There's a lot of different programs and hardware out there, most of which claims that they have the solution - or at least a better solution- than the others, but I'm fundamentally not a technologist. I want to learn the concepts more than I want to learn some specific program. So I'm going to try and put into code the things that I learn so that I don't have to really learn them, and maybe write up what I find as well. Though this is &lt;i&gt;Project ALPaCa&lt;/i&gt;, this notebook is more my &lt;i&gt;Adventures In Packet Capturing&lt;/i&gt;, but I couldn't find a good acronym based on AIPC.
 &lt;/p&gt;

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about pcap info)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/pcap-info.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Tue, 28 Aug 2018 01:32:50 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PCAP Types and Sub-Types</title><link>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-orgcfa73ff" class="outline-2"&gt;
-&lt;h2 id="orgcfa73ff"&gt;Background&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orgcfa73ff"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about pcap info)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/pcap-info.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Fri, 31 Aug 2018 02:46:03 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PCAP Types and Sub-Types</title><link>https://github.com/necromuralist/packet_capture/posts/pcap-types-and-sub-types/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-org6c9f078" class="outline-2"&gt;
+&lt;h2 id="org6c9f078"&gt;Background&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org6c9f078"&gt;
 &lt;p&gt;
 These are the 802.11 frame types and sub-types you can use to help filter out packets. The types and sub-types are represented in the frames as integers (well, really bits), but it's usually easier to remember the names (maybe).
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org634fb18" class="outline-2"&gt;
-&lt;h2 id="org634fb18"&gt;Types&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org634fb18"&gt;
+&lt;div id="outline-container-orgb31e2e2" class="outline-2"&gt;
+&lt;h2 id="orgb31e2e2"&gt;Types&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgb31e2e2"&gt;
 &lt;p&gt;
 There are three main types that you need.
 &lt;/p&gt;
@@ -49,18 +49,18 @@ There are three main types that you need.
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-orgf0f2285" class="outline-2"&gt;
-&lt;h2 id="orgf0f2285"&gt;Sub-Types&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orgf0f2285"&gt;
+&lt;div id="outline-container-orgbc30e99" class="outline-2"&gt;
+&lt;h2 id="orgbc30e99"&gt;Sub-Types&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgbc30e99"&gt;
 &lt;p&gt;
 Within each of the types there are sub-types to identify what kind of frames they are. There are a lot of them so I'm only going to list the ones that I think are the most useful right now.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org5bd54f5" class="outline-2"&gt;
-&lt;h2 id="org5bd54f5"&gt;Management&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org5bd54f5"&gt;
+&lt;div id="outline-container-org773397b" class="outline-2"&gt;
+&lt;h2 id="org773397b"&gt;Management&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org773397b"&gt;
 &lt;table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides"&gt;
 
 

@@ -1,0 +1,213 @@
+#+BEGIN_COMMENT
+.. title: PyShark Test
+.. slug: pyshark-test
+.. date: 2018-08-30 13:40:58 UTC-07:00
+.. tags: pyshark python experiment notes
+.. category: PyShark
+.. link: 
+.. description: A first test of pyshark.
+.. type: text
+#+END_COMMENT
+
+* Introduction
+  This is a first look at [[https://github.com/KimiNewt/pyshark][pyshark]]. Since I'm mostly interested in WiFi I'm going to look at that here. Before this code is run I put it in [[https://en.wikipedia.org/wiki/Monitor_mode][monitor mode]] using [[https://www.aircrack-ng.org/doku.php?id=airmon-ng][airmon-ng]] a shell-script to help you do this. The interface says that tshark should be able to put it into monitor mode but it didn't work when I tried it, but this is the first time I've tried it so I might have missed something.
+
+
+* Imports
+#+BEGIN_SRC python :noweb-ref imports
+import pyshark
+#+END_SRC
+* Contents
+#+BEGIN_SRC python :noweb-ref constants
+INTERFACE = "wlx00c0ca967adc"
+README_OUT = "/tmp/readme.pcapng"
+MOTOROLA = "d0:04:01:6d:c1:a7"
+ASUS = "1c:b7:2c:86:be:d0"
+#+END_SRC
+
+* The Readme Example
+  This first example is taken from the [[https://github.com/KimiNewt/pyshark][repository]] README file.
+** Readme Tangle
+   It turns out that there's some kind of conflict with ob-ipython and pyshark, so to run it I have to tangle it outside of my file and run it, so this is going to be a noweb type of thing.
+#+BEGIN_SRC python :tangle /tmp/readme_1.py
+<<imports>>
+
+<<constants>>
+
+<<load-file>>
+
+<<first-packet>>
+
+<<motorola-packets>>
+#+END_SRC
+** Reading the Packets
+   I'm going to start with the live capture. I don't know if this is as fast as using the binary, but maybe it's good enough for this.
+#+BEGIN_SRC ipython :session pyshark :results none
+capture = pyshark.LiveCapture(interface=INTERFACE, output_file=README_OUT)
+capture.sniff(timeout=60)
+#+END_SRC
+
+This gave me an error:
+
+#+BEGIN_EXAMPLE
+RuntimeErrorTraceback (most recent call last)
+<ipython-input-4-44ea834109e1> in <module>()
+      1 capture = pyshark.LiveCapture(interface=INTERFACE, output_file=README_OUT)
+----> 2 capture.sniff(timeout=60)
+
+~/.virtualenvs/alpaca/lib/python3.6/site-packages/pyshark/capture/capture.py in load_packets(self, packet_count, timeout)
+    130 
+    131         try:
+--> 132             self.apply_on_packets(keep_packet, timeout=timeout)
+    133             self.loaded = True
+    134         except TimeoutError:
+
+~/.virtualenvs/alpaca/lib/python3.6/site-packages/pyshark/capture/capture.py in apply_on_packets(self, callback, timeout, packet_count)
+    245         if timeout is not None:
+    246             coro = asyncio.wait_for(coro, timeout)
+--> 247         return self.eventloop.run_until_complete(coro)
+    248 
+    249     async def packets_from_tshark(self, packet_callback, packet_count=None, close_tshark=True):
+
+/usr/lib/python3.6/asyncio/base_events.py in run_until_complete(self, future)
+    453         future.add_done_callback(_run_until_complete_cb)
+    454         try:
+--> 455             self.run_forever()
+    456         except:
+    457             if new_task and future.done() and not future.cancelled():
+
+/usr/lib/python3.6/asyncio/base_events.py in run_forever(self)
+    410         if events._get_running_loop() is not None:
+    411             raise RuntimeError(
+--> 412                 'Cannot run the event loop while another loop is running')
+    413         self._set_coroutine_wrapper(self._debug)
+    414         self._thread_id = threading.get_ident()
+
+RuntimeError: Cannot run the event loop while another loop is running
+#+END_EXAMPLE
+
+So I ran dumpcap at the command-line to get the file instead.
+
+#+BEGIN_EXAMPLE
+dumpcap -i $WLAN /tmp/readme.pcapng -a duration:60
+#+END_EXAMPLE
+** Inspecting the Packets
+
+#+BEGIN_SRC python :noweb-ref load-file
+capture = pyshark.FileCapture(
+    README_OUT,
+    display_filter="wlan.addr=={} and wlan.addr=={}".format(MOTOROLA, ASUS))
+#+END_SRC
+
+Here's the first packet.
+
+#+BEGIN_SRC python :noweb-ref first-packet
+print(capture[0])
+#+END_SRC
+
+#+BEGIN_SRC sh :results raw
+. ~/.virtualenvs/alpaca/
+python /tmp/readme_1.py
+#+END_SRC
+
+#+RESULTS:
+Packet (Length: 44)
+Layer RADIOTAP:
+	Header revision: 0
+	Header pad: 0
+	Header length: 18
+	Present flags
+	Present flags word: 0x0000482e
+	.... .... .... .... .... .... .... ...0 = TSFT: Absent
+	.... .... .... .... .... .... .... ..1. = Flags: Present
+	.... .... .... .... .... .... .... .1.. = Rate: Present
+	.... .... .... .... .... .... .... 1... = Channel: Present
+	.... .... .... .... .... .... ...0 .... = FHSS: Absent
+	.... .... .... .... .... .... ..1. .... = dBm Antenna Signal: Present
+	.... .... .... .... .... .... .0.. .... = dBm Antenna Noise: Absent
+	.... .... .... .... .... .... 0... .... = Lock Quality: Absent
+	.... .... .... .... .... ...0 .... .... = TX Attenuation: Absent
+	.... .... .... .... .... ..0. .... .... = dB TX Attenuation: Absent
+	.... .... .... .... .... .0.. .... .... = dBm TX Power: Absent
+	.... .... .... .... .... 1... .... .... = Antenna: Present
+	.... .... .... .... ...0 .... .... .... = dB Antenna Signal: Absent
+	.... .... .... .... ..0. .... .... .... = dB Antenna Noise: Absent
+	.... .... .... .... .1.. .... .... .... = RX flags: Present
+	.... .... .... .0.. .... .... .... .... = Channel+: Absent
+	.... .... .... 0... .... .... .... .... = MCS information: Absent
+	.... .... ...0 .... .... .... .... .... = A-MPDU Status: Absent
+	.... .... ..0. .... .... .... .... .... = VHT information: Absent
+	.... .... .0.. .... .... .... .... .... = frame timestamp: Absent
+	.... .... 0... .... .... .... .... .... = HE information: Absent
+	.... ...0 .... .... .... .... .... .... = HE-MU information: Absent
+	...0 000. .... .... .... .... .... .... = Reserved: 0x0
+	..0. .... .... .... .... .... .... .... = Radiotap NS next: False
+	.0.. .... .... .... .... .... .... .... = Vendor NS next: False
+	0... .... .... .... .... .... .... .... = Ext: Absent
+	Flags: 0x00
+	.... ...0 = CFP: False
+	.... ..0. = Preamble: Long
+	.... .0.. = WEP: False
+	.... 0... = Fragmentation: False
+	...0 .... = FCS at end: False
+	..0. .... = Data Pad: False
+	.0.. .... = Bad FCS: False
+	0... .... = Short GI: False
+	Data Rate: 1.0 Mb/s
+	Channel frequency: 2412 [BG 1]
+	Channel flags: 0x00a0, Complementary Code Keying (CCK), 2 GHz spectrum
+	.... .... ...0 .... = Turbo: False
+	.... .... ..1. .... = Complementary Code Keying (CCK): True
+	.... .... .0.. .... = Orthogonal Frequency-Division Multiplexing (OFDM): False
+	.... .... 1... .... = 2 GHz spectrum: True
+	.... ...0 .... .... = 5 GHz spectrum: False
+	.... ..0. .... .... = Passive: False
+	.... .0.. .... .... = Dynamic CCK-OFDM: False
+	.... 0... .... .... = Gaussian Frequency Shift Keying (GFSK): False
+	...0 .... .... .... = GSM (900MHz): False
+	..0. .... .... .... = Static Turbo: False
+	.0.. .... .... .... = Half Rate Channel (10MHz Channel Width): False
+	0... .... .... .... = Quarter Rate Channel (5MHz Channel Width): False
+	Antenna signal: -28dBm
+	Antenna: 0
+	RX flags: 0x0000
+	.... .... .... .... .... ..0. = Bad PLCP: False
+Layer WLAN_RADIO:
+	PHY type: 802.11b (4)
+	Short preamble: False
+	Data rate: 1.0 Mb/s
+	Channel: 1
+	Frequency: 2412MHz
+	Signal strength (dBm): -28dBm
+	Duration: 400\xc2\xb5s
+	Preamble: 192\xc2\xb5s
+Layer WLAN:
+	Type/Subtype: QoS Null function (No data) (0x002c)
+	Frame Control Field: 0xc811
+	.... ..00 = Version: 0
+	.... 10.. = Type: Data frame (2)
+	1100 .... = Subtype: 12
+	Flags: 0x11
+	.... ..01 = DS status: Frame from STA to DS via an AP (To DS: 1 From DS: 0) (0x1)
+	.... .0.. = More Fragments: This is the last fragment
+	.... 0... = Retry: Frame is not being retransmitted
+	...1 .... = PWR MGT: STA will go to sleep
+	..0. .... = More Data: No data buffered
+	.0.. .... = Protected flag: Data is not protected
+	0... .... = Order flag: Not strictly ordered
+	.000 0001 0011 1010 = Duration: 314 microseconds
+	Receiver address: 1c:b7:2c:86:be:d0
+	Transmitter address: d0:04:01:6d:c1:a7
+	Destination address: 1c:b7:2c:86:be:d0
+	Source address: d0:04:01:6d:c1:a7
+	BSS Id: 1c:b7:2c:86:be:d0
+	STA address: d0:04:01:6d:c1:a7
+	.... .... .... 0000 = Fragment number: 0
+	0100 0011 0010 .... = Sequence number: 1074
+	Qos Control: 0x0001
+	.... .... .... 0001 = TID: 1
+	.... .... .... .001 = Priority: Background (Background) (1)
+	.... .... ...0 .... = QoS bit 4: Bits 8-15 of QoS Control field are TXOP Duration Requested
+	.... .... .00. .... = Ack Policy: Normal Ack (0x0)
+	0000 0000 .... .... = TXOP Duration Requested: 0 (no TXOP requested)
+
