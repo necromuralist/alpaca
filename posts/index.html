@@ -74,9 +74,9 @@
             <p class="dateline"><a href="pyshark-test/" rel="bookmark"><time class="published dt-published" datetime="2018-08-30T13:40:58-07:00" title="2018-08-30 13:40">2018-08-30 13:40</time></a></p>
         </div>
     </header><div class="e-content entry-content">
-    <div id="outline-container-orgb644a3d" class="outline-2">
-<h2 id="orgb644a3d">Introduction</h2>
-<div class="outline-text-2" id="text-orgb644a3d">
+    <div id="outline-container-org25d833f" class="outline-2">
+<h2 id="org25d833f">Introduction</h2>
+<div class="outline-text-2" id="text-org25d833f">
 <p>
 This is a first look at <a href="https://github.com/KimiNewt/pyshark">pyshark</a>. Since I'm mostly interested in WiFi I'm going to look at that here. Before this code is run I put it in <a href="https://en.wikipedia.org/wiki/Monitor_mode">monitor mode</a> using <a href="https://www.aircrack-ng.org/doku.php?id=airmon-ng">airmon-ng</a> a shell-script to help you do this. The interface says that tshark should be able to put it into monitor mode but it didn't work when I tried it, but this is the first time I've tried it so I might have missed something.
 </p>
@@ -84,17 +84,17 @@ This is a first look at <a href="https://github.com/KimiNewt/pyshark">pyshark</a
 </div>
 
 
-<div id="outline-container-orgb96bea6" class="outline-2">
-<h2 id="orgb96bea6">Imports</h2>
-<div class="outline-text-2" id="text-orgb96bea6">
+<div id="outline-container-org6aa63ac" class="outline-2">
+<h2 id="org6aa63ac">Imports</h2>
+<div class="outline-text-2" id="text-org6aa63ac">
 /home/brunhilde/.virtualenvs/alpaca/bin/python: No module named virtualfish
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyshark</span>
 </pre></div>
 </div>
 </div>
-<div id="outline-container-orgb0fcc6b" class="outline-2">
-<h2 id="orgb0fcc6b">Contents</h2>
-<div class="outline-text-2" id="text-orgb0fcc6b">
+<div id="outline-container-orga81414e" class="outline-2">
+<h2 id="orga81414e">Contents</h2>
+<div class="outline-text-2" id="text-orga81414e">
 /home/brunhilde/.virtualenvs/alpaca/bin/python: No module named virtualfish
 <div class="highlight"><pre><span></span><span class="n">INTERFACE</span> <span class="o">=</span> <span class="s2">"wlx00c0ca967adc"</span>
 <span class="n">README_OUT</span> <span class="o">=</span> <span class="s2">"/tmp/readme.pcapng"</span>
@@ -104,16 +104,16 @@ This is a first look at <a href="https://github.com/KimiNewt/pyshark">pyshark</a
 </div>
 </div>
 
-<div id="outline-container-org36f369c" class="outline-2">
-<h2 id="org36f369c">The Readme Example</h2>
-<div class="outline-text-2" id="text-org36f369c">
+<div id="outline-container-orgcecac11" class="outline-2">
+<h2 id="orgcecac11">The Readme Example</h2>
+<div class="outline-text-2" id="text-orgcecac11">
 <p>
 This first example is taken from the <a href="https://github.com/KimiNewt/pyshark">repository</a> README file.
 </p>
 </div>
-<div id="outline-container-orgd34564f" class="outline-3">
-<h3 id="orgd34564f">Readme Tangle</h3>
-<div class="outline-text-3" id="text-orgd34564f">
+<div id="outline-container-org017af23" class="outline-3">
+<h3 id="org017af23">Readme Tangle</h3>
+<div class="outline-text-3" id="text-org017af23">
 <p>
 It turns out that there's some kind of conflict with ob-ipython and pyshark, so to run it I have to tangle it outside of my file and run it, so this is going to be a noweb type of thing.
 </p>
@@ -130,9 +130,9 @@ It turns out that there's some kind of conflict with ob-ipython and pyshark, so 
 </pre></div>
 </div>
 </div>
-<div id="outline-container-org445530b" class="outline-3">
-<h3 id="org445530b">Reading the Packets</h3>
-<div class="outline-text-3" id="text-org445530b">
+<div id="outline-container-org46c4509" class="outline-3">
+<h3 id="org46c4509">Reading the Packets</h3>
+<div class="outline-text-3" id="text-org46c4509">
 <p>
 I'm going to start with the live capture. I don't know if this is as fast as using the binary, but maybe it's good enough for this.
 </p>
@@ -191,9 +191,9 @@ dumpcap -i $WLAN /tmp/readme.pcapng -a duration:60
 </pre>
 </div>
 </div>
-<div id="outline-container-org636426e" class="outline-3">
-<h3 id="org636426e">Inspecting the Packets</h3>
-<div class="outline-text-3" id="text-org636426e">
+<div id="outline-container-org3cc6b18" class="outline-3">
+<h3 id="org3cc6b18">Inspecting the Packets</h3>
+<div class="outline-text-3" id="text-org3cc6b18">
 /home/brunhilde/.virtualenvs/alpaca/bin/python: No module named virtualfish
 <div class="highlight"><pre><span></span><span class="n">capture</span> <span class="o">=</span> <span class="n">pyshark</span><span class="o">.</span><span class="n">FileCapture</span><span class="p">(</span>
     <span class="n">README_OUT</span><span class="p">,</span>
@@ -213,38 +213,6 @@ Here's the first packet.
 python /tmp/readme_1.py
 </pre></div>
 <p>
-Packet (Length: 44)
-Layer RADIOTAP:
-	Header revision: 0
-	Header pad: 0
-	Header length: 18
-	Present flags
-	Present flags word: 0x0000482e
-	…. …. …. …. …. …. …. …0 = TSFT: Absent
-	…. …. …. …. …. …. …. ..1. = Flags: Present
-	…. …. …. …. …. …. …. .1.. = Rate: Present
-	…. …. …. …. …. …. …. 1… = Channel: Present
-	…. …. …. …. …. …. …0 …. = FHSS: Absent
-	…. …. …. …. …. …. ..1. …. = dBm Antenna Signal: Present
-	…. …. …. …. …. …. .0.. …. = dBm Antenna Noise: Absent
-	…. …. …. …. …. …. 0… …. = Lock Quality: Absent
-	…. …. …. …. …. …0 …. …. = TX Attenuation: Absent
-	…. …. …. …. …. ..0. …. …. = dB TX Attenuation: Absent
-	…. …. …. …. …. .0.. …. …. = dBm TX Power: Absent
-	…. …. …. …. …. 1… …. …. = Antenna: Present
-	…. …. …. …. …0 …. …. …. = dB Antenna Signal: Absent
-	…. …. …. …. ..0. …. …. …. = dB Antenna Noise: Absent
-	…. …. …. …. .1.. …. …. …. = RX flags: Present
-	…. …. …. .0.. …. …. …. …. = Channel+: Absent
-	…. …. …. 0… …. …. …. …. = MCS information: Absent
-	…. …. …0 …. …. …. …. …. = A-MPDU Status: Absent
-	…. …. ..0. …. …. …. …. …. = VHT information: Absent
-	…. …. .0.. …. …. …. …. …. = frame timestamp: Absent
-	…. …. 0… …. …. …. …. …. = HE information: Absent
-	…. …0 …. …. …. …. …. …. = HE-MU information: Absent
-	…0 000. …. …. …. …. …. …. = Reserved: 0x0
-	..0. …. …. …. …. …. …. …. = Radiotap NS next: False
-	.0.. …. …. …. …. …. …. …. = Vendor NS next: False
 	0… …. …. …. …. …. …. …. = Ext: Absent
 	Flags: 0x00
 	…. …0 = CFP: False

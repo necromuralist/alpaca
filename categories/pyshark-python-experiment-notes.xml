@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about pyshark python experiment notes)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/pyshark-python-experiment-notes.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Fri, 31 Aug 2018 02:46:03 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PyShark Test</title><link>https://github.com/necromuralist/packet_capture/posts/pyshark-test/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-orgb644a3d" class="outline-2"&gt;
-&lt;h2 id="orgb644a3d"&gt;Introduction&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orgb644a3d"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Packet Capture (Posts about pyshark python experiment notes)</title><link>https://github.com/necromuralist/packet_capture/</link><description></description><atom:link href="https://github.com/necromuralist/packet_capture/categories/pyshark-python-experiment-notes.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:necromuralist@protonmail.com"&gt;necromuralist&lt;/a&gt; </copyright><lastBuildDate>Fri, 31 Aug 2018 02:47:09 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>PyShark Test</title><link>https://github.com/necromuralist/packet_capture/posts/pyshark-test/</link><dc:creator>necromuralist</dc:creator><description>&lt;div id="outline-container-org25d833f" class="outline-2"&gt;
+&lt;h2 id="org25d833f"&gt;Introduction&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org25d833f"&gt;
 &lt;p&gt;
 This is a first look at &lt;a href="https://github.com/KimiNewt/pyshark"&gt;pyshark&lt;/a&gt;. Since I'm mostly interested in WiFi I'm going to look at that here. Before this code is run I put it in &lt;a href="https://en.wikipedia.org/wiki/Monitor_mode"&gt;monitor mode&lt;/a&gt; using &lt;a href="https://www.aircrack-ng.org/doku.php?id=airmon-ng"&gt;airmon-ng&lt;/a&gt; a shell-script to help you do this. The interface says that tshark should be able to put it into monitor mode but it didn't work when I tried it, but this is the first time I've tried it so I might have missed something.
 &lt;/p&gt;
@@ -9,17 +9,17 @@ This is a first look at &lt;a href="https://github.com/KimiNewt/pyshark"&gt;pysh
 &lt;/div&gt;
 
 
-&lt;div id="outline-container-orgb96bea6" class="outline-2"&gt;
-&lt;h2 id="orgb96bea6"&gt;Imports&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orgb96bea6"&gt;
+&lt;div id="outline-container-org6aa63ac" class="outline-2"&gt;
+&lt;h2 id="org6aa63ac"&gt;Imports&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org6aa63ac"&gt;
 /home/brunhilde/.virtualenvs/alpaca/bin/python: No module named virtualfish
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyshark&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-orgb0fcc6b" class="outline-2"&gt;
-&lt;h2 id="orgb0fcc6b"&gt;Contents&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orgb0fcc6b"&gt;
+&lt;div id="outline-container-orga81414e" class="outline-2"&gt;
+&lt;h2 id="orga81414e"&gt;Contents&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orga81414e"&gt;
 /home/brunhilde/.virtualenvs/alpaca/bin/python: No module named virtualfish
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;INTERFACE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"wlx00c0ca967adc"&lt;/span&gt;
 &lt;span class="n"&gt;README_OUT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"/tmp/readme.pcapng"&lt;/span&gt;
@@ -29,16 +29,16 @@ This is a first look at &lt;a href="https://github.com/KimiNewt/pyshark"&gt;pysh
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org36f369c" class="outline-2"&gt;
-&lt;h2 id="org36f369c"&gt;The Readme Example&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org36f369c"&gt;
+&lt;div id="outline-container-orgcecac11" class="outline-2"&gt;
+&lt;h2 id="orgcecac11"&gt;The Readme Example&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orgcecac11"&gt;
 &lt;p&gt;
 This first example is taken from the &lt;a href="https://github.com/KimiNewt/pyshark"&gt;repository&lt;/a&gt; README file.
 &lt;/p&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-orgd34564f" class="outline-3"&gt;
-&lt;h3 id="orgd34564f"&gt;Readme Tangle&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-orgd34564f"&gt;
+&lt;div id="outline-container-org017af23" class="outline-3"&gt;
+&lt;h3 id="org017af23"&gt;Readme Tangle&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org017af23"&gt;
 &lt;p&gt;
 It turns out that there's some kind of conflict with ob-ipython and pyshark, so to run it I have to tangle it outside of my file and run it, so this is going to be a noweb type of thing.
 &lt;/p&gt;
@@ -55,9 +55,9 @@ It turns out that there's some kind of conflict with ob-ipython and pyshark, so 
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org445530b" class="outline-3"&gt;
-&lt;h3 id="org445530b"&gt;Reading the Packets&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org445530b"&gt;
+&lt;div id="outline-container-org46c4509" class="outline-3"&gt;
+&lt;h3 id="org46c4509"&gt;Reading the Packets&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org46c4509"&gt;
 &lt;p&gt;
 I'm going to start with the live capture. I don't know if this is as fast as using the binary, but maybe it's good enough for this.
 &lt;/p&gt;
@@ -116,9 +116,9 @@ dumpcap -i $WLAN /tmp/readme.pcapng -a duration:60
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org636426e" class="outline-3"&gt;
-&lt;h3 id="org636426e"&gt;Inspecting the Packets&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org636426e"&gt;
+&lt;div id="outline-container-org3cc6b18" class="outline-3"&gt;
+&lt;h3 id="org3cc6b18"&gt;Inspecting the Packets&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org3cc6b18"&gt;
 /home/brunhilde/.virtualenvs/alpaca/bin/python: No module named virtualfish
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;capture&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pyshark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FileCapture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;README_OUT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -138,38 +138,6 @@ Here's the first packet.
 python /tmp/readme_1.py
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;
-Packet (Length: 44)
-Layer RADIOTAP:
-	Header revision: 0
-	Header pad: 0
-	Header length: 18
-	Present flags
-	Present flags word: 0x0000482e
-	…. …. …. …. …. …. …. …0 = TSFT: Absent
-	…. …. …. …. …. …. …. ..1. = Flags: Present
-	…. …. …. …. …. …. …. .1.. = Rate: Present
-	…. …. …. …. …. …. …. 1… = Channel: Present
-	…. …. …. …. …. …. …0 …. = FHSS: Absent
-	…. …. …. …. …. …. ..1. …. = dBm Antenna Signal: Present
-	…. …. …. …. …. …. .0.. …. = dBm Antenna Noise: Absent
-	…. …. …. …. …. …. 0… …. = Lock Quality: Absent
-	…. …. …. …. …. …0 …. …. = TX Attenuation: Absent
-	…. …. …. …. …. ..0. …. …. = dB TX Attenuation: Absent
-	…. …. …. …. …. .0.. …. …. = dBm TX Power: Absent
-	…. …. …. …. …. 1… …. …. = Antenna: Present
-	…. …. …. …. …0 …. …. …. = dB Antenna Signal: Absent
-	…. …. …. …. ..0. …. …. …. = dB Antenna Noise: Absent
-	…. …. …. …. .1.. …. …. …. = RX flags: Present
-	…. …. …. .0.. …. …. …. …. = Channel+: Absent
-	…. …. …. 0… …. …. …. …. = MCS information: Absent
-	…. …. …0 …. …. …. …. …. = A-MPDU Status: Absent
-	…. …. ..0. …. …. …. …. …. = VHT information: Absent
-	…. …. .0.. …. …. …. …. …. = frame timestamp: Absent
-	…. …. 0… …. …. …. …. …. = HE information: Absent
-	…. …0 …. …. …. …. …. …. = HE-MU information: Absent
-	…0 000. …. …. …. …. …. …. = Reserved: 0x0
-	..0. …. …. …. …. …. …. …. = Radiotap NS next: False
-	.0.. …. …. …. …. …. …. …. = Vendor NS next: False
 	0… …. …. …. …. …. …. …. = Ext: Absent
 	Flags: 0x00
 	…. …0 = CFP: False
